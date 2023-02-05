@@ -1,3 +1,12 @@
 body {
-  background-color: blueviolet;
+  background-color: rgb(192, 168, 215);
+}
+
+* {
+  border: solid 3px rgb(51, 71, 22);
+}
+
+img {
+  height: 100px;
+  width: 100px;
 }
