@@ -1,8 +1,8 @@
 import Ingredient from './Ingredient';
-import ingredientsData from '../data/ingredients';
+
 
 class Recipe {
-  constructor(recipeInfo) {
+  constructor(recipeInfo, ingredientsData) {
     this.id = recipeInfo.id;
     this.image = recipeInfo.image;
     this.ingredients = recipeInfo.ingredients.map(ingredient => {
@@ -25,15 +25,7 @@ class Recipe {
   }
 
   getInstructions() {
-    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => {
-      if (instructionA.number > instructionB.number) {
-        return 1;
-      } else if (instructionA.number < instructionB.number) {
-        return -1;
-      } else {
-        return 0;
-      }
-    })
+    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => instructionA.number - instructionB.number)
     return sortedInstructions.map(instruction => instruction.instruction);
   }
 }

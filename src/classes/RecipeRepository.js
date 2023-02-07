@@ -1,8 +1,8 @@
 import Recipe from './Recipe';
 
 class RecipeRepository {
-  constructor(recipeRepo) {
-    this.recipes = recipeRepo.map(recipe => new Recipe(recipe))
+  constructor(recipeRepo, ingredientsData) {
+    this.recipes = recipeRepo.map(recipe => new Recipe(recipe, ingredientsData))
   }
 
   filterByTag(tag) {
@@ -13,8 +13,12 @@ class RecipeRepository {
     return filteredRecipes;
   }
 
-  filterByName() {
+  filterByName(name) {
+    const filteredRecipes = this.recipes.filter((recipe) => {
+      return recipe.name === name;
+    });
 
+    return filteredRecipes;
   }
 }
 
