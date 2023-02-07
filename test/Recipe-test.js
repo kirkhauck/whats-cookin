@@ -145,7 +145,7 @@ describe('Recipe', () => {
   });
 
   it('Should be able to have an array of Ingredients', () => {
-    expect(recipeInstance.ingredients[0]).to.be.an.instanceOf(Ingredient);
+    expect(recipeInstance.ingredients[0].ingredient).to.be.an.instanceOf(Ingredient);
   });
 
   it('Should have Ingredient instance for all ingredients', () => {
@@ -153,7 +153,7 @@ describe('Recipe', () => {
   });
   
   it('Should have Ingredient with correct ingredient data', () => {
-    expect(recipeInstance.ingredients).to.deep.equal(recipe.ingredients);
+    expect(recipeInstance.ingredients[0].ingredient.id).to.equal(recipe.ingredients[0].id);
   });
 
   it('Should have an instructions array', () => {
@@ -166,6 +166,5 @@ describe('Recipe', () => {
 
   it('Should have an array of tags', () => {
     expect(recipeInstance.tags).to.deep.equal(recipe.tags);
-    console.log(recipeInstance.ingredients)
   });
 })

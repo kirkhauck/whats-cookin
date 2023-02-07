@@ -11,6 +11,7 @@ class Recipe {
         ingredient: new Ingredient(findIngredient), 
         quantity: ingredient.quantity}
       })
+    this.instructions = recipeInfo.instructions;
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
   }
