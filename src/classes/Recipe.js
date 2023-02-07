@@ -15,6 +15,27 @@ class Recipe {
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
   }
+
+  getIngredientNames() {
+    return this.ingredients.map(ingredient => ingredient.ingredient.name);
+  }
+
+  getIngredientCost() {
+    return this.ingredients.map(ingredient => ingredient.quantity.amount * ingredient.ingredient.ingredientCost);
+  }
+
+  getInstructions() {
+    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => {
+      if (instructionA.number > instructionB.number) {
+        return 1;
+      } else if (instructionA.number < instructionB.number) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
+    return sortedInstructions.map(instruction => instruction.instruction);
+  }
 }
 
 export default Recipe;

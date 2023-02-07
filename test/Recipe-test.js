@@ -167,4 +167,21 @@ describe('Recipe', () => {
   it('Should have an array of tags', () => {
     expect(recipeInstance.tags).to.deep.equal(recipe.tags);
   });
+
+  it('Should be able to return an array of all ingredient names', () => {
+    expect(recipeInstance.getIngredientNames()[0]).to.equal("wheat flour");
+    expect(recipeInstance.getIngredientNames().length).to.equal(11)
+  })
+
+  it('Should be able to return an array of cost in cents per ingredient', () => {
+    expect(recipeInstance.getIngredientCost()[0]).to.equal(213)
+    expect(recipeInstance.getIngredientCost().length).to.equal(11)
+  })
+
+  it('Should return an array of the recipe instructions', () => {
+    expect(recipeInstance.getInstructions()[0]).to.equal("In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.")
+    expect(recipeInstance.getInstructions()[5]).to.equal("Remove the pan from the oven and let sit for 10 minutes before removing onto a cooling rack.Top with ice cream and a drizzle of chocolate sauce.")
+  })
+
+
 })
