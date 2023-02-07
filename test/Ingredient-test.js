@@ -5,7 +5,6 @@ describe('Ingredient', () => {
   let sampleIngredients, ingredient;
 
   beforeEach(() => {
-    console.log("cabbage")
     sampleIngredients = [
     {
       "id": 20081,
