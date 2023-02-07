@@ -9,6 +9,7 @@ class Recipe {
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
   }
+
 }
 
 export default Recipe;

@@ -1,8 +1,11 @@
-class RecipeRepository {
-  constructor() {
+import Recipe from './Recipe';
 
-    // One class to get you started!
+class RecipeRepository {
+  constructor(recipeRepo) {
+    this.recipes = recipeRepo.map(recipe => new Recipe(recipe))
   }
+
+  
 }
 
 export default RecipeRepository;
