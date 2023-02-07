@@ -1,109 +1,14 @@
 import { expect } from 'chai';
-import Recipe from '../src/classes/Recipe';
 import RecipeRepository from '../src/classes/RecipeRepository';
+import recipeSampleData from '../src/data/recipes-sample';
+import ingredientsData from '../src/data/ingredients';
+import Recipe from '../src/classes/Recipe';
 
-describe.only('RecipeRepository', () => {
+describe('RecipeRepository', () => {
   let sampleRecipes, recipeRepository;
-
   beforeEach('instantiate RecipeRepository', () => {
-
-    sampleRecipes = [ 
-      new Recipe({
-      "id": 595736,
-      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-      "ingredients": [
-        {
-          "id": 20081,
-          "quantity": {
-            "amount": 1.5,
-            "unit": "c"
-          }
-        },
-        {
-          "id": 18372,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "tsp"
-          }
-        },
-        {
-          "id": 1123,
-          "quantity": {
-            "amount": 1,
-            "unit": "large"
-          }
-        }
-      ],
-      "instructions": [
-        {
-          "instruction": "Whisk together",
-          "number": 1
-        },
-        {
-          "instruction": "Add egg and vanilla",
-          "number": 2
-        },
-        {
-          "instruction": "Add dry ingredients",
-          "number": 3
-        }
-      ],
-      "name": "Loaded Chocolate Chip Pudding Cookie Cups",
-      "tags": [
-        "antipasti",
-        "starter",
-        "snack",
-      ]
-    }),
-    new Recipe ({
-      "id": 721146,
-      "image": "https://spoonacular.com/recipeImages/721146-556x370.jpg",
-      "ingredients": [
-        {
-          "id": 12061,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "cup"
-          }
-        },
-        {
-          "id": 19334,
-          "quantity": {
-            "amount": 6,
-            "unit": "tablespoons"
-          }
-        },
-        {
-          "id": 12104,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "cup"
-          }
-        }
-      ],
-      "instructions": [
-        {
-          "instruction": "Preheat",
-          "number": 1
-        },
-        {
-          "instruction": "Combine",
-          "number": 2
-        },
-        {
-          "instruction": "Pour the chocolate",
-          "number": 3
-        }
-      ],
-      "name": "Creamy Coconut Yogurt Bowl with Chocolate Granola (Video)",
-      "tags": [
-        "side dish",
-        "yummy",
-        "mystery"
-      ]
-    })];
-
-    recipeRepository = new RecipeRepository(sampleRecipes);
+    sampleRecipes = recipeSampleData;
+    recipeRepository = new RecipeRepository(sampleRecipes, ingredientsData);
   });
 
   it('Should be a function', () => {
@@ -114,15 +19,23 @@ describe.only('RecipeRepository', () => {
     expect(recipeRepository).to.be.an.instanceOf(RecipeRepository);
   });
 
-  // Will need to test once Recipe.js is finished
-  it.skip('Should have a list of recipes', () => {
-    expect(recipeRepository.recipes).to.deep.equal(sampleRecipes);
+  it('Should have a list of recipes', () => {
+    const recipe = new Recipe(sampleRecipes[0], ingredientsData)
+    expect(recipeRepository.recipes[0]).to.deep.equal(recipe);
   });
 
   it('should return a filtered list based on tag', () => {
     const snackRecipes = recipeRepository.filterByTag('snack');
-    
-    expect(snackRecipes).to.deep.equal([sampleRecipes[0]]);
+    expect(snackRecipes[0].tags).to.deep.equal(recipeRepository.recipes[0].tags);
   });
 
+  it('should return a filtered list based on name', () => {
+    const snackRecipes = recipeRepository.filterByName('Loaded Chocolate Chip Pudding Cookie Cups');
+    expect(snackRecipes[0].name).to.deep.equal(recipeRepository.recipes[0].name);
+  });
+
+  it('should return a filtered list based on non-matching name', () => {
+    const snackRecipes = recipeRepository.filterByName('bad cookies string');
+    expect(snackRecipes).to.deep.equal([]);
+  });
 });
