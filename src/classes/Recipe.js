@@ -5,7 +5,7 @@ class Recipe {
     this.id = recipeInfo.id;
     this.image = recipeInfo.image;
     this.ingredients = recipeInfo.ingredients.map(ingredient => new Ingredient(ingredient));
-    this.insructions = recipeInfo.insructions;
+    this.instructions = recipeInfo.instructions;
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
   }
