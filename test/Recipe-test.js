@@ -166,5 +166,6 @@ describe('Recipe', () => {
 
   it('Should have an array of tags', () => {
     expect(recipeInstance.tags).to.deep.equal(recipe.tags);
+    console.log(recipeInstance.ingredients)
   });
 })
