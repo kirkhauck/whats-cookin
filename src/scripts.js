@@ -7,7 +7,7 @@ import RecipeRepository from './classes/RecipeRepository';
 import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
 
-let recipeRepository;
+let recipeRepository, currentRecipes;
 const recipeSection = document.getElementById('recipes-section');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
@@ -15,14 +15,25 @@ const searchButtonName = document.getElementById('search-button-name');
 
 window.addEventListener('load', () => {
     recipeRepository = new RecipeRepository(recipeData, ingredientsData);
-    recipeRepository.recipes.forEach(recipe => {
-        recipeSection.innerHTML += `
-            <figure><img src="${recipe.image}"><figcaption>${recipe.name}</figcaption></figure>
-        `
-    })
+    currentRecipes = recipeRepository.recipes;
+    refreshRecipes();
 })
 
 searchButtonName.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log(recipeRepository.filterByName(searchInputName.value));
+    if(searchInputName.value === ''){
+        currentRecipes = recipeRepository.recipes
+    }else{
+        currentRecipes = recipeRepository.filterByName(searchInputName.value);
+    }
+    refreshRecipes();
 })
+
+const refreshRecipes = () => {
+    recipeSection.innerHTML = '';
+    currentRecipes.forEach(recipe => {
+        recipeSection.innerHTML += `
+            <figure><img src="${recipe.image}"><figcaption>${recipe.name}</figcaption></figure>
+        `
+    })
+}
