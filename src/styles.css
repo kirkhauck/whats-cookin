@@ -41,6 +41,10 @@ img {
   width: 150px;
 }
 
+.ignore-pointer-event {
+  pointer-events: none;
+}
+
 form {
   display: flex;
   height: 30px;
@@ -130,7 +134,6 @@ form label{
   border-style: none;
   border-width: 0;
   cursor: pointer;
-  -webkit-appearance: button;
   text-transform: none;
   overflow: visible;
   line-height: 1.15;

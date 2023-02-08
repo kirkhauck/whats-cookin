@@ -1,3 +1,4 @@
+// IMPORTS
 import './styles.css';
 import apiCalls from './apiCalls';
 import MicroModal from 'micromodal';
@@ -7,14 +8,16 @@ import RecipeRepository from './classes/RecipeRepository';
 import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
 
-
+// SELECTORS
 let recipeRepository, currentRecipes;
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
+const modalTitle = document.getElementById('modal-1-title');
 
+// EVENT LISTENERS
 window.addEventListener('load', () => {
   recipeRepository = new RecipeRepository(recipeData, ingredientsData);
   currentRecipes = recipeRepository.recipes;
@@ -28,6 +31,10 @@ window.addEventListener('load', () => {
       <option value="${tag}">${tag}</option>`;
   });
 });
+
+recipeSection.addEventListener('click', (event) => {
+  console.log(event.target.dataset.recipeid);
+})
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
@@ -49,10 +56,11 @@ const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure data-custom-open="modal-1"><img src="${recipe.image}"><figcaption>${recipe.name}</figcaption></figure>`;
+    <figure data-recipeid="${recipe.id}" data-custom-open="modal-1"><img class="ignore-pointer-event" src="${recipe.image}"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
   });
+
   MicroModal.init({
-    onShow: modal => console.info(`${modal.id} is shown`), // [1]
+    onShow: modal => modalTitle.innerText = `${currentRecipes[0].name}`,
     onClose: modal => console.info(`${modal.id} is hidden`), // [2]
     openTrigger: 'data-custom-open'
   });
