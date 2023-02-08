@@ -15,6 +15,22 @@ class User {
     removeRecipeToCook(recipe) {
         this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
     }
+
+    filterRecipeToCookByTag(tag) {
+        const filteredRecipes = this.recipesToCook.filter((recipe) => {
+            return recipe.tags.includes(tag)
+          });
+      
+          return filteredRecipes;
+    }
+
+    filterRecipeToCookByName(name) {
+        const filteredRecipes = this.recipesToCook.filter((recipe) => {
+            return recipe.name.toLowerCase().includes(name.toLowerCase());
+          });
+      
+          return filteredRecipes;
+    }
 };
 
 export default User;

@@ -45,4 +45,20 @@ describe.only('User', () => {
         user.removeRecipeToCook(recipeSampleData[1]);
         expect(user.recipesToCook).to.deep.equal([recipeSampleData[0], recipeSampleData[2]]);
     })
+
+    it('Should be able to filter recipes to cook by a tag', () => {
+        user.addRecipeToCook(recipeSampleData[0]);
+        user.addRecipeToCook(recipeSampleData[1]);
+        user.addRecipeToCook(recipeSampleData[2]);
+
+        expect(user.filterRecipeToCookByTag('appetizer')).to.deep.equal([recipeSampleData[0]]);   
+    })
+
+    it('Should be able to filter recipes to cook by a name', () => {
+        user.addRecipeToCook(recipeSampleData[0]);
+        user.addRecipeToCook(recipeSampleData[1]);
+        user.addRecipeToCook(recipeSampleData[2]);
+
+        expect(user.filterRecipeToCookByName("Dirty Steve's Original Wing Sauce")).to.deep.equal([recipeSampleData[2]]);
+    })
 })
