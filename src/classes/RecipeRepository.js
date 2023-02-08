@@ -20,6 +20,10 @@ class RecipeRepository {
 
     return filteredRecipes;
   }
+
+  getRecipeByID(id) {
+    return this.recipes.find(recipe => recipe.id == id);
+  }
 }
 
 export default RecipeRepository;

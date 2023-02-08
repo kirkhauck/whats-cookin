@@ -6,7 +6,6 @@ html, body {
 }
 
 body {
-  background-color: #ffff;
   display: flex;
   height: 100vh;
   margin: 0;
@@ -133,3 +132,5 @@ input, select {
 ::-webkit-scrollbar-thumb {
   background: #a7727d;
 }
+
+
