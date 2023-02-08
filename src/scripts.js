@@ -34,7 +34,8 @@ window.addEventListener('load', () => {
 });
 
 recipeSection.addEventListener('click', (event) => {
-  console.log(event.target.dataset.recipeid);
+  const selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+  console.log(selectedRecipe);
 })
 
 searchButtonName.addEventListener('click', (event) => {
