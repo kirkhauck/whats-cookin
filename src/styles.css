@@ -1,10 +1,12 @@
 html, body {
   margin: 0;
   padding: 0;
+  color: #a7727d;
+  font-family: 'Lucida Grande', sans-serif;
 }
 
 body {
-  background-color: rgb(192, 168, 215);
+  background-color: #ffff;
   display: flex;
   height: 100vh;
   margin: 0;
@@ -16,199 +18,118 @@ main {
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8ead8;
+  width: 100%;
+  height: 100px;
+  margin: 0;
+  border-bottom: #eddbc7 5px solid;
 }
 
 .recipes {
   display: flex;
   overflow: auto;
   height: 80%;
+  width: 100%;
   flex-grow: 1;
   flex-wrap: wrap;
-}
-
-nav {
-  width: 200px;
-  background-color: aqua;
+  justify-content: center;
 }
 
 footer {
-  padding: 20px;
   height: 100px;
+  width: 100%;
+  background-color: #f8ead8;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-top: #eddbc7 5px solid;
 }
 
-img {
-  height: 150px;
-  width: 150px;
+img, figure {
+  height: 180px;
+  width: 180px;
+  font-size: smaller;
+  margin: 2% 1% 4% 0;
+  border-radius: 3px;
+  object-fit: cover;
 }
 
 .ignore-pointer-event {
   pointer-events: none;
 }
 
+figure:hover {
+  opacity: 50%;
+  cursor: pointer;
+}
+
+figcaption:hover {
+  opacity: 50%;
+  cursor: pointer;
+}
+
+img {
+  border-bottom: #a7727d solid 5px;
+}
+
+figcaption {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+
 form {
   display: flex;
   height: 30px;
+  width: 400px;
 }
 
 form img{
   height: 20px;
   width: 20px;
+  border: none;
 }
 
 form label{
-  margin-right: 5px;
   display: flex;
   align-items: center;
 }
 
-
-/**************************\
-  Basic Modal Styles
-\**************************/
-
-.modal {
-  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+button {
+  font-family: 'Lucida Grande', sans-serif;
+  background-color: #eddbc7;
+  border: none;
+  color: #a7727d;
 }
 
-.modal__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal__container {
-  background-color: #fff;
-  padding: 30px;
-  max-width: 500px;
-  max-height: 100vh;
-  border-radius: 4px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal__title {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  color: #00449e;
-  box-sizing: border-box;
-}
-
-.modal__close {
-  background: transparent;
-  border: 0;
-}
-
-.modal__header .modal__close:before { content: "\2715"; }
-
-.modal__content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-  color: rgba(0,0,0,.8);
-}
-
-.modal__btn {
-  font-size: .875rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  background-color: #e6e6e6;
-  color: rgba(0,0,0,.8);
-  border-radius: .25rem;
-  border-style: none;
-  border-width: 0;
+button:hover, input:hover, select:hover {
+  background-color: #f9f5e7;
   cursor: pointer;
-  text-transform: none;
-  overflow: visible;
-  line-height: 1.15;
-  margin: 0;
-  will-change: transform;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  transition: -webkit-transform .25s ease-out;
-  transition: transform .25s ease-out;
-  transition: transform .25s ease-out,-webkit-transform .25s ease-out;
 }
 
-.modal__btn:focus, .modal__btn:hover {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
+input, select {
+  font-family: 'Lucida Grande', sans-serif;
+  background-color: #f9f5e7;
+  border: #a7727d 1px solid;
+  margin: 0 2%;
 }
 
-.modal__btn-primary {
-  background-color: #00449e;
-  color: #fff;
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-
-
-/**************************\
-  Demo Animation Style
-\**************************/
-@keyframes mmfadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
+::-webkit-scrollbar-track {
+  background: #eddbc7;
 }
 
-@keyframes mmfadeOut {
-    from { opacity: 1; }
-      to { opacity: 0; }
-}
-
-@keyframes mmslideIn {
-  from { transform: translateY(15%); }
-    to { transform: translateY(0); }
-}
-
-@keyframes mmslideOut {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10%); }
-}
-
-.micromodal-slide {
-  display: none;
-}
-
-.micromodal-slide.is-open {
-  display: block;
-}
-
-.micromodal-slide[aria-hidden="false"] .modal__overlay {
-  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-}
-
-.micromodal-slide[aria-hidden="false"] .modal__container {
-  animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
-}
-
-.micromodal-slide[aria-hidden="true"] .modal__overlay {
-  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-}
-
-.micromodal-slide[aria-hidden="true"] .modal__container {
-  animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
-}
-
-.micromodal-slide .modal__container,
-.micromodal-slide .modal__overlay {
-  will-change: transform;
+::-webkit-scrollbar-thumb {
+  background: #a7727d;
 }
