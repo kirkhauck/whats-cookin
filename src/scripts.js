@@ -1,5 +1,6 @@
 // IMPORTS
 import './styles.css';
+import './micromodal.css';
 import apiCalls from './apiCalls';
 import MicroModal from 'micromodal';
 import './images/turing-logo.png'
