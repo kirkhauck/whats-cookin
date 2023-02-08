@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <title>Whats Cookin</title>
   </head>
   <body>
@@ -21,9 +22,12 @@
           <button id="search-button-name"> <img src="images/magnify.svg"> </button>
         </form>
         <form>
-          <label for=“tags”>Choose a tag:</label>
-          <select name=“tags” id=“tags” class="tags"></select>
-          <button id="tagButton">Filter Recipes</button>
+          <label for=“tags”>Filter</label>
+          <select name=“tags” id=“tags” class="tags">
+            <option value="select-value"></option>
+          </select>
+          <button id="tagButton"><span class="material-symbols-outlined">
+            filter_list</span></button>
         </form>
       </footer>
     </main>

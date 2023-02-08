@@ -48,9 +48,13 @@ searchButtonName.addEventListener('click', (event) => {
 
 filterByTagButton.addEventListener('click', (event) => {
   event.preventDefault();
-  currentRecipes = recipeRepository.filterByTag(tagSection.value);
-  refreshRecipes();
-});
+  if (tagSection.value === 'select-value') {
+    currentRecipes = recipeRepository.recipes;
+  } else {
+    currentRecipes = recipeRepository.filterByTag(tagSection.value);
+    refreshRecipes();
+  }
+  });
   
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
