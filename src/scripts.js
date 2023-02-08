@@ -77,6 +77,7 @@ const refreshRecipes = () => {
 
 const updateModal = (recipe) => {
   modalTitle.innerText = recipe.name;
+
   modalIngredients.innerHTML = `
     <tr>
       <th>Amount</th>
@@ -98,4 +99,11 @@ const updateModal = (recipe) => {
     <th></th>
     <th>$${recipe.getIngredientTotalCost()}</th>
   </tr>`
+
+  modalInstructions.innerHTML = '';
+  recipe.getInstructions().forEach(instruction => {
+    modalInstructions.innerHTML += `
+      <li>${instruction}</li>
+    `
+  })
 }
