@@ -17,6 +17,9 @@ const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
 const modalTitle = document.getElementById('modal-1-title');
+const modalIngredients = document.getElementById('modal-ingredients');
+const modalInstructions = document.getElementById('modal-instructions');
+const modalTotal = document.getElementById('modal-total');
 
 // EVENT LISTENERS
 window.addEventListener('load', () => {
@@ -35,7 +38,7 @@ window.addEventListener('load', () => {
 
 recipeSection.addEventListener('click', (event) => {
   const selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
-  console.log(selectedRecipe);
+  updateModal(selectedRecipe);
 })
 
 searchButtonName.addEventListener('click', (event) => {
@@ -66,8 +69,33 @@ const refreshRecipes = () => {
   });
 
   MicroModal.init({
-    onShow: modal => modalTitle.innerText = `${currentRecipes[0].name}`,
-    onClose: modal => console.info(`${modal.id} is hidden`), // [2]
+    // onShow: modal => modalTitle.innerText = `${currentRecipes[0].name}`,
+    // onClose: modal => console.info(`${modal.id} is hidden`), // [2]
     openTrigger: 'data-custom-open'
   });
 };
+
+const updateModal = (recipe) => {
+  modalTitle.innerText = recipe.name;
+  modalIngredients.innerHTML = `
+    <tr>
+      <th>Amount</th>
+      <th>Ingredient</th>
+      <th>Cost</th>
+    </tr>`;
+  recipe.ingredients.forEach((ing,i) => {
+    modalIngredients.innerHTML += `
+      <tr>
+        <th>${ing.quantity.amount} ${ing.quantity.unit}</th>
+        <th>${ing.ingredient.name}</th>
+        <th>$${recipe.getIngredientCost()[i]}</th>
+      </tr>
+    `
+  })
+  modalIngredients.innerHTML +=
+  `<tr>
+    <th></th>
+    <th></th>
+    <th>$${recipe.getIngredientTotalCost()}</th>
+  </tr>`
+}

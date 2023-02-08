@@ -21,7 +21,14 @@ class Recipe {
   }
 
   getIngredientCost() {
-    return this.ingredients.map(ingredient => ingredient.quantity.amount * ingredient.ingredient.ingredientCost);
+    return this.ingredients.map(ingredient => ((ingredient.quantity.amount * ingredient.ingredient.ingredientCost) / 100).toFixed(2));
+  }
+
+  getIngredientTotalCost() {
+    return (this.ingredients.reduce((acc, ingredient) => {
+      acc += (ingredient.quantity.amount * ingredient.ingredient.ingredientCost);
+      return acc;
+    },0) / 100).toFixed(2)
   }
 
   getInstructions() {
