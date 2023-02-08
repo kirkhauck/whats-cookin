@@ -8,15 +8,18 @@
     <nav>
       <ul>
         <li>Saved Recipes</li>
-        <li>Blah blah blah sertgerkjthskjrfh kjhsrh</li>
+        <li>Blah blah blah</li>
       </ul>
     </nav>
     <main>
       <h1>Recipe Website Name</h1>
       <section id="recipes-section" class="recipes"></section>
       <footer>
-        <label for="search">Search</label>
-        <input type="text" name="search">
+        <form>
+          <label for="search">Search</label>
+          <input id="search-input-name" type="text" name="search">
+          <button id="search-button-name"> <img src="images/magnify.svg"> </button>
+        </form>
         <label for=“tags”>Choose a tag:</label>
         <select name=“tags” id=“tags” class="tags"></select>
         <button id="tagButton">Filter Recipes</button>
