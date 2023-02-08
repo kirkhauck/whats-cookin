@@ -9,6 +9,8 @@ import ingredientsData from './data/ingredients';
 
 let recipeRepository, currentRecipes;
 const recipeSection = document.getElementById('recipes-section');
+const tagSection = document.querySelector('.tags');
+const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
 
@@ -29,11 +31,21 @@ searchButtonName.addEventListener('click', (event) => {
     refreshRecipes();
 })
 
-const refreshRecipes = () => {
+
+window.addEventListener('load', () => {
+  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
+  recipeTags.forEach(tag => {
+    tagSection.innerHTML += `
+        <option value="${tag}">${tag}</option>
+        `
+      });
+    });
+    
+  const refreshRecipes = () => {
     recipeSection.innerHTML = '';
     currentRecipes.forEach(recipe => {
-        recipeSection.innerHTML += `
-            <figure><img src="${recipe.image}"><figcaption>${recipe.name}</figcaption></figure>
-        `
-    })
-}
+      recipeSection.innerHTML += `
+          <figure><img src="${recipe.image}"><figcaption>${recipe.name}</figcaption></figure>
+      `;
+  });
+}  
