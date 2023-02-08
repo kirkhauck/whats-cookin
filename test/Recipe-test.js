@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import Recipe from '../src/classes/Recipe';
 import Ingredient from '../src/classes/Ingredient';
 import recipeSampleData from '../src/data/recipes-sample';
-import ingredientsData from '../src/data/ingredients';
+import ingredientsSampleData from '../src/data/ingredients-sample';
 
 describe('Recipe', () => {
   let recipeInstance;
   beforeEach(() => {
-    recipeInstance = new Recipe(recipeSampleData[0], ingredientsData);
+    recipeInstance = new Recipe(recipeSampleData[0], ingredientsSampleData);
   });
 
   it('Should be a function', () => {
@@ -31,7 +31,7 @@ describe('Recipe', () => {
   });
 
   it('Should have Ingredient instance for all ingredients', () => {
-    expect(recipeInstance.ingredients.length).to.equal(11);
+    expect(recipeInstance.ingredients.length).to.equal(3);
   });
   
   it('Should have Ingredient with correct ingredient data', () => {
@@ -64,16 +64,16 @@ describe('Recipe', () => {
 
   it('Should be able to return an array of all ingredient names', () => {
     expect(recipeInstance.getIngredientNames()[0]).to.equal("wheat flour");
-    expect(recipeInstance.getIngredientNames().length).to.equal(11)
+    expect(recipeInstance.getIngredientNames().length).to.equal(3)
   })
 
   it('Should be able to return an array of cost in cents per ingredient', () => {
     expect(recipeInstance.getIngredientCost()[0]).to.equal(213)
-    expect(recipeInstance.getIngredientCost().length).to.equal(11)
+    expect(recipeInstance.getIngredientCost().length).to.equal(3)
   })
 
   it('Should return an array of the recipe instructions', () => {
     expect(recipeInstance.getInstructions()[0]).to.equal("In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.")
-    expect(recipeInstance.getInstructions()[5]).to.equal("Remove the pan from the oven and let sit for 10 minutes before removing onto a cooling rack.Top with ice cream and a drizzle of chocolate sauce.")
+    expect(recipeInstance.getInstructions()[2]).to.equal("Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees.")
   })
 })
