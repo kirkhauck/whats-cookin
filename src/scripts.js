@@ -61,13 +61,12 @@ searchButtonName.addEventListener('click', (event) => {
   } else if (favView) {
     currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
   }
+  tagSection.value = 'select-value';
   refreshRecipes();
 });
 
 filterByTagButton.addEventListener('click', (event) => {
   event.preventDefault();
-  console.log(tagSection.value)
-  console.log(typeof tagSection.value)
   if(tagSection.value == 'select-value' && !favView) {
     currentRecipes = recipeRepository.recipes;
   } else if (tagSection.value == 'select-value' && favView) {
@@ -77,12 +76,21 @@ filterByTagButton.addEventListener('click', (event) => {
   } else if (favView) {
     currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
   }
+  searchInputName.value = '';
   refreshRecipes();
 });
 
 showFavoritesButton.addEventListener('click', () => {
   favView = !favView;
-  currentRecipes = user.recipesToCook;
+  if(favView) {
+    currentRecipes = user.recipesToCook;
+    showFavoritesButton.innerText = 'Show All Recipes';
+  } else {
+    currentRecipes = recipeRepository.recipes;
+    showFavoritesButton.innerText = 'Show Favorites';
+  }
+  tagSection.value = 'select-value';
+  searchInputName.value = '';
   refreshRecipes();
 });
 
@@ -93,6 +101,7 @@ favoriteButton.addEventListener('click', () => {
     user.removeRecipeToCook(selectedRecipe);
   }
   toggleHeart();
+  refreshRecipes();
 });
   
 const refreshRecipes = () => {
