@@ -11,13 +11,17 @@ import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
 import usersData from './data/users';
 
-// SELECTORS
+// Global Variables
 let user, recipeRepository, currentRecipes, selectedRecipe;
+let favView = false;
+
+//Selectors
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
+const showFavoritesButton = document.getElementById('showFavoritesButton');
 const favoriteButton = document.getElementById('favoriteButton');
 const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
@@ -27,7 +31,6 @@ const modalInstructions = document.getElementById('modal-instructions');
 // EVENT LISTENERS
 window.addEventListener('load', () => {
   user = new User(usersData[getRandomUserIndex()]);
-  console.log(user);
   recipeRepository = new RecipeRepository(recipeData, ingredientsData);
   currentRecipes = recipeRepository.recipes;
   refreshRecipes();
@@ -45,27 +48,20 @@ recipeSection.addEventListener('click', (event) => {
   selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
   toggleHeart();
   updateModal(selectedRecipe);
-})
+});
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
-  if(searchInputName.value === '') {
-      currentRecipes = recipeRepository.recipes;
-  } else {
-      currentRecipes = recipeRepository.filterByName(searchInputName.value);
+  if(searchInputName.value === '' && !favView) {
+    currentRecipes = recipeRepository.recipes;
+  } else if (searchInputName.value === '' && favView) {
+    currentRecipes = user.recipesToCook;
+  } else if (!favView) {
+    currentRecipes = recipeRepository.filterByName(searchInputName.value);
+  } else if (favView) {
+    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
   }
   refreshRecipes();
-});
-
-favoriteButton.addEventListener('click', () => {
-  if (!user.recipesToCook.includes(selectedRecipe)) {
-    user.addRecipeToCook(selectedRecipe);
-  } else {
-    user.removeRecipeToCook(selectedRecipe);
-  }
-  toggleHeart();
-
-  console.log(user.recipesToCook);
 });
 
 filterByTagButton.addEventListener('click', (event) => {
@@ -76,7 +72,22 @@ filterByTagButton.addEventListener('click', (event) => {
     currentRecipes = recipeRepository.filterByTag(tagSection.value);
     refreshRecipes();
   }
-  });
+});
+
+showFavoritesButton.addEventListener('click', () => {
+  favView = !favView;
+  currentRecipes = user.recipesToCook;
+  refreshRecipes();
+});
+
+favoriteButton.addEventListener('click', () => {
+  if (!user.recipesToCook.includes(selectedRecipe)) {
+    user.addRecipeToCook(selectedRecipe);
+  } else {
+    user.removeRecipeToCook(selectedRecipe);
+  }
+  toggleHeart();
+});
   
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
@@ -86,8 +97,6 @@ const refreshRecipes = () => {
   });
 
   MicroModal.init({
-    // onShow: modal => modalTitle.innerText = `${currentRecipes[0].name}`,
-    // onClose: modal => console.info(`${modal.id} is hidden`), // [2]
     openTrigger: 'data-custom-open'
   });
 };
