@@ -32,8 +32,9 @@
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
           <header class="modal__header">
             <h2 class="modal__title" id="modal-1-title"><!-- Populates with Recipe Title --></h2>
-            <button id="favoriteButton" class="favorite-button"><span class="material-symbols-outlined">
-              favorite</span></button>
+            <button id="favoriteButton" class="favorite-button">
+              <span id="heart" class="material-symbols-outlined">favorite</span>
+            </button>
             <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
           </header>
           <main class="modal__content" id="modal-1-content">
@@ -46,7 +47,6 @@
             </table>
             <ol id="modal-instructions">
             </ol>
-            <p id="modal-total"></p>
           </main>
         </div>
       </div>

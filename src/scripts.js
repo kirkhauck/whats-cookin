@@ -5,24 +5,29 @@ import apiCalls from './apiCalls';
 import MicroModal from 'micromodal';
 import './images/turing-logo.png'
 import './images/magnify.svg'
+import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
 import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
+import usersData from './data/users';
 
 // SELECTORS
-let recipeRepository, currentRecipes;
+let user, recipeRepository, currentRecipes, selectedRecipe;
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
+const favoriteButton = document.getElementById('favoriteButton');
+const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
-const modalTotal = document.getElementById('modal-total');
 
 // EVENT LISTENERS
 window.addEventListener('load', () => {
+  user = new User(usersData[getRandomUserIndex()]);
+  console.log(user);
   recipeRepository = new RecipeRepository(recipeData, ingredientsData);
   currentRecipes = recipeRepository.recipes;
   refreshRecipes();
@@ -37,18 +42,30 @@ window.addEventListener('load', () => {
 });
 
 recipeSection.addEventListener('click', (event) => {
-  const selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+  selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+  toggleHeart();
   updateModal(selectedRecipe);
 })
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
   if(searchInputName.value === '') {
-      currentRecipes = recipeRepository.recipes
+      currentRecipes = recipeRepository.recipes;
   } else {
       currentRecipes = recipeRepository.filterByName(searchInputName.value);
   }
   refreshRecipes();
+});
+
+favoriteButton.addEventListener('click', () => {
+  if (!user.recipesToCook.includes(selectedRecipe)) {
+    user.addRecipeToCook(selectedRecipe);
+  } else {
+    user.removeRecipeToCook(selectedRecipe);
+  }
+  toggleHeart();
+
+  console.log(user.recipesToCook);
 });
 
 filterByTagButton.addEventListener('click', (event) => {
@@ -106,4 +123,15 @@ const updateModal = (recipe) => {
       <li>${instruction}</li>
     `
   })
-}
+};
+
+const toggleHeart = () => {
+  if (user.recipesToCook.includes(selectedRecipe)) {
+    heart.classList.add('full-heart');
+  } else {
+    heart.classList.remove('full-heart');
+  }
+};
+
+// Will need to replace usersData with fetched data file later
+const getRandomUserIndex = () => Math.floor(Math.random() * usersData.length);
