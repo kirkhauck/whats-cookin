@@ -5,6 +5,12 @@ html, body {
   font-family: 'Lucida Grande', sans-serif;
 }
 
+/* Add this class to heart symbol to fill it */
+.full-heart {
+  font-variation-settings:
+  'FILL' 1,
+}
+
 body {
   display: flex;
   height: 100vh;
