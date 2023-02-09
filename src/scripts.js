@@ -5,24 +5,32 @@ import apiCalls from './apiCalls';
 import MicroModal from 'micromodal';
 import './images/turing-logo.png'
 import './images/magnify.svg'
+import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
 import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
+import usersData from './data/users';
 
-// SELECTORS
-let recipeRepository, currentRecipes;
+// Global Variables
+let user, recipeRepository, currentRecipes, selectedRecipe;
+let favView = false;
+
+//Selectors
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
+const showFavoritesButton = document.getElementById('showFavoritesButton');
+const favoriteButton = document.getElementById('favoriteButton');
+const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
-const modalTotal = document.getElementById('modal-total');
 
 // EVENT LISTENERS
 window.addEventListener('load', () => {
+  user = new User(usersData[getRandomUserIndex()]);
   recipeRepository = new RecipeRepository(recipeData, ingredientsData);
   currentRecipes = recipeRepository.recipes;
   refreshRecipes();
@@ -37,29 +45,64 @@ window.addEventListener('load', () => {
 });
 
 recipeSection.addEventListener('click', (event) => {
-  const selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+  selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+  toggleHeart();
   updateModal(selectedRecipe);
-})
+});
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
-  if(searchInputName.value === '') {
-      currentRecipes = recipeRepository.recipes
-  } else {
-      currentRecipes = recipeRepository.filterByName(searchInputName.value);
+  if(searchInputName.value === '' && !favView) {
+    currentRecipes = recipeRepository.recipes;
+  } else if (searchInputName.value === '' && favView) {
+    currentRecipes = user.recipesToCook;
+  } else if (!favView) {
+    currentRecipes = recipeRepository.filterByName(searchInputName.value);
+  } else if (favView) {
+    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
   }
+  tagSection.value = 'select-value';
   refreshRecipes();
 });
 
 filterByTagButton.addEventListener('click', (event) => {
   event.preventDefault();
-  if (tagSection.value === 'select-value') {
+  if(tagSection.value == 'select-value' && !favView) {
     currentRecipes = recipeRepository.recipes;
-  } else {
+  } else if (tagSection.value == 'select-value' && favView) {
+    currentRecipes = user.recipesToCook;
+  } else if (!favView) {
     currentRecipes = recipeRepository.filterByTag(tagSection.value);
-    refreshRecipes();
+  } else if (favView) {
+    currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
   }
-  });
+  searchInputName.value = '';
+  refreshRecipes();
+});
+
+showFavoritesButton.addEventListener('click', () => {
+  favView = !favView;
+  if(favView) {
+    currentRecipes = user.recipesToCook;
+    showFavoritesButton.innerText = 'Show All Recipes';
+  } else {
+    currentRecipes = recipeRepository.recipes;
+    showFavoritesButton.innerText = 'Show Favorites';
+  }
+  tagSection.value = 'select-value';
+  searchInputName.value = '';
+  refreshRecipes();
+});
+
+favoriteButton.addEventListener('click', () => {
+  if (!user.recipesToCook.includes(selectedRecipe)) {
+    user.addRecipeToCook(selectedRecipe);
+  } else {
+    user.removeRecipeToCook(selectedRecipe);
+  }
+  toggleHeart();
+  refreshRecipes();
+});
   
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
@@ -69,8 +112,6 @@ const refreshRecipes = () => {
   });
 
   MicroModal.init({
-    // onShow: modal => modalTitle.innerText = `${currentRecipes[0].name}`,
-    // onClose: modal => console.info(`${modal.id} is hidden`), // [2]
     openTrigger: 'data-custom-open'
   });
 };
@@ -106,4 +147,15 @@ const updateModal = (recipe) => {
       <li>${instruction}</li>
     `
   })
-}
+};
+
+const toggleHeart = () => {
+  if (user.recipesToCook.includes(selectedRecipe)) {
+    heart.classList.add('full-heart');
+  } else {
+    heart.classList.remove('full-heart');
+  }
+};
+
+// Will need to replace usersData with fetched data file later
+const getRandomUserIndex = () => Math.floor(Math.random() * usersData.length);
