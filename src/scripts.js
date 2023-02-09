@@ -66,12 +66,18 @@ searchButtonName.addEventListener('click', (event) => {
 
 filterByTagButton.addEventListener('click', (event) => {
   event.preventDefault();
-  if (tagSection.value === 'select-value') {
+  console.log(tagSection.value)
+  console.log(typeof tagSection.value)
+  if(tagSection.value == 'select-value' && !favView) {
     currentRecipes = recipeRepository.recipes;
-  } else {
+  } else if (tagSection.value == 'select-value' && favView) {
+    currentRecipes = user.recipesToCook;
+  } else if (!favView) {
     currentRecipes = recipeRepository.filterByTag(tagSection.value);
-    refreshRecipes();
+  } else if (favView) {
+    currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
   }
+  refreshRecipes();
 });
 
 showFavoritesButton.addEventListener('click', () => {
