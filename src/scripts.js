@@ -7,7 +7,7 @@ import './images/turing-logo.png'
 import './images/magnify.svg'
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
-import recipeData from './data/recipes';
+//import recipeData from './data/recipes';
 import ingredientsData from './data/ingredients';
 import usersData from './data/users';
 
@@ -28,20 +28,22 @@ const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
 
+
 // EVENT LISTENERS
 window.addEventListener('load', () => {
   user = new User(usersData[getRandomUserIndex()]);
-  recipeRepository = new RecipeRepository(recipeData, ingredientsData);
-  currentRecipes = recipeRepository.recipes;
-  refreshRecipes();
-});
-
-window.addEventListener('load', () => {
-  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
-  recipeTags.forEach(tag => {
-    tagSection.innerHTML += `
-      <option value="${tag}">${tag}</option>`;
-  });
+  let recipeData;
+  fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
+    .then(response => response.json())
+    .then(recipes => {
+      recipeData = recipes.recipeData;
+      console.log(recipeData);
+      recipeRepository = new RecipeRepository(recipeData, ingredientsData);
+      currentRecipes = recipeRepository.recipes;
+      populateTagFilter();
+      refreshRecipes();
+    })
+    .catch(err => console.log('epic fail: ', err))
 });
 
 recipeSection.addEventListener('click', (event) => {
@@ -148,6 +150,14 @@ const updateModal = (recipe) => {
     `
   })
 };
+
+const populateTagFilter = () => {
+  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
+  recipeTags.forEach(tag => {
+    tagSection.innerHTML += `
+      <option value="${tag}">${tag}</option>`;
+  });
+}
 
 const toggleHeart = () => {
   if (user.recipesToCook.includes(selectedRecipe)) {
