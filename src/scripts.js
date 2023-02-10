@@ -1,19 +1,18 @@
 // IMPORTS
 import './styles.css';
 import './micromodal.css';
-import apiCalls from './apiCalls';
+import getUsers from './apiCalls';
 import MicroModal from 'micromodal';
 import './images/turing-logo.png'
 import './images/magnify.svg'
 import User from './classes/User';
-import RecipeRepository from './classes/RecipeRepository';
-import recipeData from './data/recipes';
-import ingredientsData from './data/ingredients';
 import usersData from './data/users';
-
+import RecipeRepository from './classes/RecipeRepository';
+import ingredientsDataGood from './data/ingredients';
 // Global Variables
-let user, recipeRepository, currentRecipes, selectedRecipe;
+let user, currentRecipes, selectedRecipe, recipeRepository;
 let favView = false;
+//let usersData = getUsers().then(users => users);
 
 //Selectors
 const recipeSection = document.getElementById('recipes-section');
@@ -28,20 +27,33 @@ const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
 
+
 // EVENT LISTENERS
 window.addEventListener('load', () => {
-  user = new User(usersData[getRandomUserIndex()]);
-  recipeRepository = new RecipeRepository(recipeData, ingredientsData);
-  currentRecipes = recipeRepository.recipes;
-  refreshRecipes();
-});
-
-window.addEventListener('load', () => {
-  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
-  recipeTags.forEach(tag => {
-    tagSection.innerHTML += `
-      <option value="${tag}">${tag}</option>`;
-  });
+  const userPromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users');
+  const recipePromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes');
+  const ingredientPromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients');
+  let fetchPromises = [userPromise, recipePromise, ingredientPromise]
+  let recipeData;
+  Promise.all(fetchPromises)
+    .then(responses => {
+      const jsonResponses = responses.map(response => response.json());
+      Promise.all(jsonResponses).then(data => {
+        data.forEach((dataset,i) => {
+          if(i === 0){
+            const users = dataset.usersData;
+            user = new User(users[getRandomUserIndex(users)]);
+          }else if(i === 1){
+            recipeData = dataset.recipeData;
+          }else if(i === 2){
+            recipeRepository = new RecipeRepository(recipeData, dataset.ingredientsData);
+            currentRecipes = recipeRepository.recipes;
+            populateTagFilter();
+            refreshRecipes();
+          }
+        })
+      })
+    })
 });
 
 recipeSection.addEventListener('click', (event) => {
@@ -149,6 +161,14 @@ const updateModal = (recipe) => {
   })
 };
 
+const populateTagFilter = () => {
+  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
+  recipeTags.forEach(tag => {
+    tagSection.innerHTML += `
+      <option value="${tag}">${tag}</option>`;
+  });
+}
+
 const toggleHeart = () => {
   if (user.recipesToCook.includes(selectedRecipe)) {
     heart.classList.add('full-heart');
@@ -158,4 +178,4 @@ const toggleHeart = () => {
 };
 
 // Will need to replace usersData with fetched data file later
-const getRandomUserIndex = () => Math.floor(Math.random() * usersData.length);
+const getRandomUserIndex = (array) => Math.floor(Math.random() * array.length);
