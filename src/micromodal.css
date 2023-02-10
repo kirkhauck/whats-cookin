@@ -1,10 +1,5 @@
-
-/**************************\
-  Basic Modal Styles
-\**************************/
-
 .modal {
-  font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
+  font-family: 'Lucida Grande', sans-serif;
 }
 
 .modal__overlay {
@@ -20,10 +15,10 @@
 }
 
 .modal__container {
-  background-color: #fff;
+  background-color: #f9f5e7;
   padding: 30px;
   max-width: 80vw;
-  max-height: 100vh;
+  max-height: 80vh;
   border-radius: 4px;
   overflow-y: auto;
   box-sizing: border-box;
@@ -36,70 +31,48 @@
 }
 
 .modal__title {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  color: #00449e;
-  box-sizing: border-box;
+  margin: 0;
+  color: #6E454C;
 }
 
-.modal__close {
+.modal__close, .favorite-button {
   background: transparent;
-  border: 0;
+  border: none;
 }
 
-.modal__header .modal__close:before { content: "\2715"; }
+.recipe-title {
+  display: flex;
+  align-items: center;
+}
+
+.favorite-button {
+  margin: 1px;
+  border: none;
+}
+
+.favorite-button:hover {
+  cursor: pointer;
+  background-color: #eddbc7;
+}
+
+.favorite-button {
+  display: flex;
+  align-items: center;
+  outline-style: none;
+  border: #6E454C solid 2px;
+  border-radius: 20px;
+  margin-left: 15px;
+}
+
+.modal__header, .modal__close:before { 
+  content: "\2715"; 
+}
 
 .modal__content {
-  margin-top: 2rem;
-  line-height: 1.5;
+  margin-top: 5px;
   color: rgba(0,0,0,.8);
 }
 
-.modal__btn {
-  font-size: .875rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  background-color: #e6e6e6;
-  color: rgba(0,0,0,.8);
-  border-radius: .25rem;
-  border-style: none;
-  border-width: 0;
-  cursor: pointer;
-  text-transform: none;
-  overflow: visible;
-  line-height: 1.15;
-  margin: 0;
-  will-change: transform;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  transition: -webkit-transform .25s ease-out;
-  transition: transform .25s ease-out;
-  transition: transform .25s ease-out,-webkit-transform .25s ease-out;
-}
-
-.modal__btn:focus, .modal__btn:hover {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
-}
-
-.modal__btn-primary {
-  background-color: #00449e;
-  color: #fff;
-}
-
-
-
-/**************************\
-  Demo Animation Style
-\**************************/
 @keyframes mmfadeIn {
     from { opacity: 0; }
       to { opacity: 1; }
@@ -150,17 +123,32 @@
 }
 
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
+  border: #eddbc7 solid 1px;
   width: 100%;
+  font-weight: 300;
+  font-size: 14px;
+  margin-top: 15px;
 }
 
 td, th {
-  border: 1px solid #dddddd;
   text-align: left;
+  border: #eddbc7 solid 1px;
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+.total-cost, .table-head {
+  font-size: 20px;
+  font-weight: 700;
+}
+.table-head {
+  text-decoration: underline;
+}
+
+.total-cost {
+  font-style: oblique;
+}
+
+li {
+  line-height: 1.5;
 }
