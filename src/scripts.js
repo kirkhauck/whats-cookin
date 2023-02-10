@@ -3,7 +3,7 @@ import './styles.css';
 import './micromodal.css';
 import './images/turing-logo.png'
 import './images/magnify.svg'
-import apiCalls from './apiCalls';
+import fetchAllData from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
@@ -27,16 +27,18 @@ const modalInstructions = document.getElementById('modal-instructions');
 
 //EVENT LISTENERS
 window.addEventListener('load', () => {
-  apiCalls().then(apiData => {
-    const users = apiData[0].usersData;
-    const recipes = apiData[1].recipeData;
-    const ingredients = apiData[2].ingredientsData
-    user = new User(users[getRandomIndex(users)]);
-    recipeRepository = new RecipeRepository(recipes, ingredients);
-    currentRecipes = recipeRepository.recipes;
-    populateTagFilter();
-    refreshRecipes();
-  });
+  fetchAllData()
+    .then(apiData => {
+      // console.log(apiData)
+      const users = apiData[0].usersData;
+      const recipes = apiData[1].recipeData;
+      const ingredients = apiData[2].ingredientsData
+      user = new User(users[getRandomIndex(users)]);
+      recipeRepository = new RecipeRepository(recipes, ingredients);
+      currentRecipes = recipeRepository.recipes;
+      populateTagFilter();
+      refreshRecipes();
+    });
 });
 
 recipeSection.addEventListener('click', (event) => {
@@ -161,3 +163,7 @@ const toggleHeart = () => {
 };
 
 const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
+
+const handleError = (error) => recipeSection.innerText = `${error}, sorry!`;
+
+export default handleError;
