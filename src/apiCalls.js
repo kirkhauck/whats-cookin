@@ -1,4 +1,8 @@
-// Your fetch requests will live here!
+const getUsers = () => {
+    return fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users')
+        .then(response => response.json())
+        .then(users => users.usersData)
+        .catch(err => console.log('epic fail: ', err))
+}
 
-
-console.log('I will be a fetch request!')
+export default getUsers;
