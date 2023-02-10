@@ -108,7 +108,7 @@ const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure data-recipeid="${recipe.id}" data-custom-open="modal-1"><img class="ignore-pointer-event" src="${recipe.image}"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
+    <figure data-recipeid="${recipe.id}" data-custom-open="modal-1"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
   });
 
   MicroModal.init({
@@ -121,9 +121,9 @@ const updateModal = (recipe) => {
 
   modalIngredients.innerHTML = `
     <tr>
-      <th>Amount</th>
-      <th>Ingredient</th>
-      <th>Cost</th>
+      <th class="table-head">Amount</th>
+      <th class="table-head">Ingredient</th>
+      <th class="table-head">Cost</th>
     </tr>`;
   recipe.ingredients.forEach((ing,i) => {
     modalIngredients.innerHTML += `
@@ -136,9 +136,9 @@ const updateModal = (recipe) => {
   })
   modalIngredients.innerHTML +=
   `<tr>
-    <th></th>
-    <th></th>
-    <th>$${recipe.getIngredientTotalCost()}</th>
+    <th>&nbsp</th>
+    <th>&nbsp</th>
+    <th class="total-cost">Total: $${recipe.getIngredientTotalCost()}</th>
   </tr>`
 
   modalInstructions.innerHTML = '';
