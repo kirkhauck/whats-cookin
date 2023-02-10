@@ -1,16 +1,49 @@
-# What's Cookin'? Starter Kit
+# What's Cookin'?
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+## Abstract
 
-## Set Up
+What's Cookin is an app that populates a page with recipe thumbnails. Users are able to click a recipe and view the instructions, ingredients, and the total cost of the ingredients. The user is able favorite recipes and click the `Show Favorites` button to see only the recipes they favorited. Users are able to look up recipes by name and by tags.
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button.
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run npm start in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page). `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use.
-5. Make sure both members of your team are collaborators on the forked repo.
-6. Do not run `npm audit fix --force`. This will update to the latest version of packages. We need to be using `webpack-dev-server@3.11.2` which is not the latest version. If you start to run into Webpack errors, first check that all group members are using the correct version.
+### Technologies Used:
+- JavaScript
+- HTML
+- CSS
+- [Micromodal](https://www.npmjs.com/package/micromodal)
+- Webpack
+- Mocha
+- Chai
 
-## Testing
+### Installation Instructions:
 
-Mocha and chai are already set up, with a boilerplate test for you.
+To clone a copy of the project to a remote repository, follow these steps:
+
+1. Clone down a local copy of [the repository](https://github.com/kirch1/whats-cookin).
+1. `cd` into the repository.
+1. Run `npm install`.
+1. Open the project in your preferred text editor.
+1. To host the page on your local server run `npm start`.
+
+### Preview of App:
+
+### Context:
+
+Completed as part of the Turing School of Software Development 2211 FE Mod 2 curriculum
+Approximate hours to completion: TBD
+
+### Contributors:
+
+[Jason Kirchman](https://github.com/kirch1)
+[Kara Anderson](https://github.com/Kanderson58)
+[Katherine Blaine](https://github.com/KatherineBlaine)
+[Kirk Hauck](https://github.com/kirkhauck)
+
+### Learning Goals:
+
+- Implement ES6 classes that communicate to each other as needed
+- Use object and array prototype methods to perform data manipulation
+- Create a user interface that is easy to use and clearly displays information.
+- Write modular, reusable code that follows SRP (Single - Responsibility Principle)
+- Implement a robust testing suite using TDD
+- Make network requests to retrieve data
+
+### Wins + Challenges:
