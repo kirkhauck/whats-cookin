@@ -1,4 +1,4 @@
-// IMPORTS
+//IMPORTS
 import './styles.css';
 import './micromodal.css';
 import './images/turing-logo.png'
@@ -25,7 +25,7 @@ const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
 
-// EVENT LISTENERS
+//EVENT LISTENERS
 window.addEventListener('load', () => {
   apiCalls().then(apiData => {
     const users = apiData[0].usersData;
