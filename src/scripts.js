@@ -1,20 +1,18 @@
-// IMPORTS
+//IMPORTS
 import './styles.css';
 import './micromodal.css';
-import getUsers from './apiCalls';
-import MicroModal from 'micromodal';
 import './images/turing-logo.png'
 import './images/magnify.svg'
+import fetchAllData from './apiCalls';
+import MicroModal from 'micromodal';
 import User from './classes/User';
-import usersData from './data/users';
 import RecipeRepository from './classes/RecipeRepository';
-import ingredientsDataGood from './data/ingredients';
-// Global Variables
+
+//GLOBAL VARIABLES
 let user, currentRecipes, selectedRecipe, recipeRepository;
 let favView = false;
-//let usersData = getUsers().then(users => users);
 
-//Selectors
+//SELECTORS
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const filterByTagButton = document.getElementById('tagButton');
@@ -27,33 +25,20 @@ const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
 
-
-// EVENT LISTENERS
+//EVENT LISTENERS
 window.addEventListener('load', () => {
-  const userPromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users');
-  const recipePromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes');
-  const ingredientPromise = fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients');
-  let fetchPromises = [userPromise, recipePromise, ingredientPromise]
-  let recipeData;
-  Promise.all(fetchPromises)
-    .then(responses => {
-      const jsonResponses = responses.map(response => response.json());
-      Promise.all(jsonResponses).then(data => {
-        data.forEach((dataset,i) => {
-          if(i === 0){
-            const users = dataset.usersData;
-            user = new User(users[getRandomUserIndex(users)]);
-          }else if(i === 1){
-            recipeData = dataset.recipeData;
-          }else if(i === 2){
-            recipeRepository = new RecipeRepository(recipeData, dataset.ingredientsData);
-            currentRecipes = recipeRepository.recipes;
-            populateTagFilter();
-            refreshRecipes();
-          }
-        })
-      })
-    })
+  fetchAllData()
+    .then(apiData => {
+      // console.log(apiData)
+      const users = apiData[0].usersData;
+      const recipes = apiData[1].recipeData;
+      const ingredients = apiData[2].ingredientsData
+      user = new User(users[getRandomIndex(users)]);
+      recipeRepository = new RecipeRepository(recipes, ingredients);
+      currentRecipes = recipeRepository.recipes;
+      populateTagFilter();
+      refreshRecipes();
+    });
 });
 
 recipeSection.addEventListener('click', (event) => {
@@ -177,5 +162,8 @@ const toggleHeart = () => {
   }
 };
 
-// Will need to replace usersData with fetched data file later
-const getRandomUserIndex = (array) => Math.floor(Math.random() * array.length);
+const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
+
+const handleError = (error) => recipeSection.innerText = `${error}, sorry!`;
+
+export default handleError;
