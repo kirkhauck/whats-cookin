@@ -62,16 +62,29 @@ searchButtonName.addEventListener('click', (event) => {
   refreshRecipes();
 });
 
-filterByTagButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  if(tagSection.value == 'select-value' && !favView) {
+// filterByTagButton.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   if(tagSection.value == 'select-value' && !favView) {
+//     currentRecipes = recipeRepository.recipes;
+//   } else if (tagSection.value == 'select-value' && favView) {
+//     currentRecipes = user.recipesToCook;
+//   } else if (!favView) {
+//     currentRecipes = recipeRepository.filterByTag(tagSection.value);
+//   } else if (favView) {
+//     currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
+//   }
+//   searchInputName.value = '';
+//   refreshRecipes();
+// });
+tagSection.addEventListener('change', function(event) {
+  if(this.value == 'select-value' && !favView) {
     currentRecipes = recipeRepository.recipes;
-  } else if (tagSection.value == 'select-value' && favView) {
+  } else if (this.value == 'select-value' && favView) {
     currentRecipes = user.recipesToCook;
   } else if (!favView) {
-    currentRecipes = recipeRepository.filterByTag(tagSection.value);
+    currentRecipes = recipeRepository.filterByTag(this.value);
   } else if (favView) {
-    currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
+    currentRecipes = user.filterRecipeToCookByTag(this.value);
   }
   searchInputName.value = '';
   refreshRecipes();
@@ -100,7 +113,8 @@ favoriteButton.addEventListener('click', () => {
   toggleHeart();
   refreshRecipes();
 });
-  
+
+// FUNCTIONS
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
