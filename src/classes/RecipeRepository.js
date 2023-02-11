@@ -2,7 +2,7 @@ import Recipe from './Recipe';
 
 class RecipeRepository {
   constructor(recipeRepo, ingredientsData) {
-    this.recipes = recipeRepo.map(recipe => new Recipe(recipe, ingredientsData))
+    this.recipes = recipeRepo.map(recipe => new Recipe(recipe, ingredientsData));
   }
 
   filterByTag(tag) {
