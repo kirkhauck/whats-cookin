@@ -8,7 +8,7 @@ const fetchApi = (url) => {
             } else {
                throw new Error('No Such Path');
             }
-        })
+        });
 }
 
 const fetchAllData = () => {
@@ -17,7 +17,7 @@ const fetchAllData = () => {
         fetchApi('recipes'),
         fetchApi('ingredients'),
     ])
-    .catch((error) => handleError(error))
+    .catch((error) => handleError(error));
 }
 
 
