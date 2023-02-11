@@ -6,24 +6,23 @@
     <title>Whats Cookin</title>
   </head>
   <body>
-    <main>
-      <h1>Snake Meal</h1>
-      <section id="recipes-section" class="recipes"></section>
-      <footer>
-        <form>
-          <label for="search-input-name">Search</label>
-          <input id="search-input-name" type="text" name="search">
-          <button id="search-button-name"> <img src="images/magnify.svg" alt="search"> </button>
-        </form>
-        <form>
-          <label for=“tags”>Filter</label>
-          <select id=“tags” class="tags">
-            <option value="select-value"></option>
-          </select>
-        </form>
-        <button id="showFavoritesButton" class="show-faves">Show Favorites</button>
-      </footer>
-    </main>
+    <h1>Snake Meal</h1>
+    <section id="recipes-section" class="recipes"></section>
+    <footer>
+      <form>
+        <!-- <label for="search-input-name">Search</label> -->
+        <input id="search-input-name" type="text" name="search" placeholder="Recipe Search">
+        <button id="search-button-name"> <span id="heart" class="material-symbols-outlined">search</span> </button>
+      </form>
+      <!-- <form> -->
+        <!-- <label for=“tags”>Filter</label> -->
+        <select id=“tags” class="tags">
+          <option value="select-value">No Filter</option>
+        </select>
+      <!-- </form> -->
+      <button id="showAllButton" class="show-faves">Show All</button>
+      <button id="showFavoritesButton" class="show-faves">Show Favorites</button>
+    </footer>
     <!-- MICROMODAL -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
       <div class="modal__overlay" tabindex="-1" data-micromodal-close>

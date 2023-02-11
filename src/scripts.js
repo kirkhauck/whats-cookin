@@ -2,7 +2,6 @@
 import './styles.css';
 import './micromodal.css';
 import './images/turing-logo.png';
-import './images/magnify.svg';
 import fetchAllData from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
@@ -15,7 +14,6 @@ let favView = false;
 //SELECTORS
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
-const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
 const showFavoritesButton = document.getElementById('showFavoritesButton');
