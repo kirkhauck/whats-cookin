@@ -139,7 +139,13 @@ input, select {
   border: #6E454C 1px solid;
   border-radius: 4px;
   color: #6E454C;
+  height: 31px;
 }
+
+select {
+  height: 35px;
+}
+
 
 ::-webkit-scrollbar {
   width: 10px;
