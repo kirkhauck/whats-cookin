@@ -1,13 +1,12 @@
+.hidden {
+  display: none;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   color: #6E454C;
   font-family: 'Lucida Grande', sans-serif;
-}
-
-.full-heart {
-  font-variation-settings:
-  'FILL' 1,
 }
 
 body {
@@ -146,6 +145,10 @@ select {
   height: 35px;
 }
 
+.full-heart {
+  font-variation-settings:
+  'FILL' 1,
+}
 
 ::-webkit-scrollbar {
   width: 10px;
