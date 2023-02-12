@@ -10,7 +10,8 @@ class Recipe {
       return {
         ingredient: new Ingredient(findIngredient), 
         quantity: ingredient.quantity}
-      })
+      });
+
     this.instructions = recipeInfo.instructions;
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
@@ -27,12 +28,14 @@ class Recipe {
   getIngredientTotalCost() {
     return (this.ingredients.reduce((acc, ingredient) => {
       acc += (ingredient.quantity.amount * ingredient.ingredient.ingredientCost);
+      
       return acc;
-    },0) / 100).toFixed(2)
+    },0) / 100).toFixed(2);
   }
 
   getInstructions() {
-    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => instructionA.number - instructionB.number)
+    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => instructionA.number - instructionB.number);
+
     return sortedInstructions.map(instruction => instruction.instruction);
   }
 }
