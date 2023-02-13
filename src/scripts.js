@@ -51,7 +51,7 @@ searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
   show(showAllButton);
   show(showFavoritesButton);
-  updateViewForm();
+  showFilterBySearch();
   tagSection.value = 'select-value';
   refreshRecipes();
 });
@@ -106,11 +106,20 @@ favoriteButton.addEventListener('click', () => {
 });
 
 // FUNCTIONS
-const updateViewForm = () => {
-  searchInputName.value === '' && view === "all" ? (currentRecipes = recipeRepository.recipes, showFavoritesButton.innerText = 'Show Favorites')
-  : searchInputName.value === '' && view === "fave" ? (currentRecipes = user.recipesToCook, showFavoritesButton.innerText = 'Show Favorites')
-  : view === "all" ? (currentRecipes = recipeRepository.filterByName(searchInputName.value), showFavoritesButton.innerText = 'Show Favorites')
-  :(currentRecipes = user.filterRecipeToCookByName(searchInputName.value), showFavoritesButton.innerText = 'Show All Favorites')
+const showFilterBySearch = () => {
+  if(searchInputName.value === '' && view === "all") {
+    currentRecipes = recipeRepository.recipes;
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (searchInputName.value === '' && view === "fave") {
+    currentRecipes = user.recipesToCook;
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (view === "all") {
+    currentRecipes = recipeRepository.filterByName(searchInputName.value);
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (view === "fave") {
+    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
+    showFavoritesButton.innerText = 'Show All Favorites'
+  }
 }
 
 const refreshRecipes = () => {
