@@ -7,7 +7,7 @@ class RecipeRepository {
 
   filterByTag(tag) {
     const filteredRecipes = this.recipes.filter((recipe) => {
-      return recipe.tags.includes(tag)
+      return recipe.tags.includes(tag);
     });
 
     return filteredRecipes;

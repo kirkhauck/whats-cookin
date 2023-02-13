@@ -1,7 +1,6 @@
 //IMPORTS
 import './styles.css';
 import './micromodal.css';
-import './images/turing-logo.png';
 import fetchAllData from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
@@ -109,16 +108,16 @@ favoriteButton.addEventListener('click', () => {
 const showFilterBySearch = () => {
   if(searchInputName.value === '' && view === "all") {
     currentRecipes = recipeRepository.recipes;
-    showFavoritesButton.innerText = 'Show Favorites'
+    showFavoritesButton.innerText = 'Show Favorites';
   } else if (searchInputName.value === '' && view === "fave") {
     currentRecipes = user.recipesToCook;
-    showFavoritesButton.innerText = 'Show Favorites'
+    showFavoritesButton.innerText = 'Show Favorites';
   } else if (view === "all") {
     currentRecipes = recipeRepository.filterByName(searchInputName.value);
-    showFavoritesButton.innerText = 'Show Favorites'
+    showFavoritesButton.innerText = 'Show Favorites';
   } else if (view === "fave") {
     currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
-    showFavoritesButton.innerText = 'Show All Favorites'
+    showFavoritesButton.innerText = 'Show All Favorites';
   }
 }
 
@@ -138,11 +137,12 @@ const updateModal = (recipe) => {
   modalTitle.innerText = recipe.name;
 
   modalIngredients.innerHTML = `
-    <tr>
-      <th class="table-head">Amount</th>
-      <th class="table-head">Ingredient</th>
-      <th class="table-head">Cost</th>
-    </tr>`;
+      <tr>
+        <th class="table-head">Amount</th>
+        <th class="table-head">Ingredient</th>
+        <th class="table-head">Cost</th>
+      </tr>
+    `;
 
   recipe.ingredients.forEach((ing,i) => {
     modalIngredients.innerHTML += `
@@ -154,26 +154,24 @@ const updateModal = (recipe) => {
     `;
   });
 
-  modalIngredients.innerHTML +=
-  `<tr>
-    <th>&nbsp</th>
-    <th>&nbsp</th>
-    <th class="total-cost">Total: $${recipe.getIngredientTotalCost()}</th>
-  </tr>`;
+  modalIngredients.innerHTML += `
+      <tr>
+        <th>&nbsp</th>
+        <th>&nbsp</th>
+        <th class="total-cost">Total: $${recipe.getIngredientTotalCost()}</th>
+      </tr>
+    `;
 
   modalInstructions.innerHTML = '';
   recipe.getInstructions().forEach(instruction => {
-    modalInstructions.innerHTML += `
-      <li>${instruction}</li>
-    `;
+    modalInstructions.innerHTML += `<li>${instruction}</li>`;
   });
 }
 
 const populateTagFilter = () => {
   const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
   recipeTags.forEach(tag => {
-    tagSection.innerHTML += `
-      <option value="${tag}">${tag}</option>`;
+    tagSection.innerHTML += `<option value="${tag}">${tag}</option>`;
   });
 }
 
@@ -182,12 +180,12 @@ const toggleHeart = () => {
 }
 
 const hide = (element) => {
-  element.classList.add('hidden')
-};
+  element.classList.add('hidden');
+}
 
 const show = (element) => {
-  element.classList.remove('hidden')
-};
+  element.classList.remove('hidden');
+}
 
 const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
 
