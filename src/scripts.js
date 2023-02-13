@@ -107,12 +107,9 @@ favoriteButton.addEventListener('click', () => {
 
 // FUNCTIONS
 const updateViewForm = () => {
-  searchInputName.value === '' && view === "all"
-  ? (currentRecipes = recipeRepository.recipes, showFavoritesButton.innerText = 'Show Favorites')
-  : searchInputName.value === '' && view === "fave" 
-  ? (currentRecipes = user.recipesToCook, showFavoritesButton.innerText = 'Show Favorites')
-  : view === "all" 
-  ? (currentRecipes = recipeRepository.filterByName(searchInputName.value), showFavoritesButton.innerText = 'Show Favorites')
+  searchInputName.value === '' && view === "all" ? (currentRecipes = recipeRepository.recipes, showFavoritesButton.innerText = 'Show Favorites')
+  : searchInputName.value === '' && view === "fave" ? (currentRecipes = user.recipesToCook, showFavoritesButton.innerText = 'Show Favorites')
+  : view === "all" ? (currentRecipes = recipeRepository.filterByName(searchInputName.value), showFavoritesButton.innerText = 'Show Favorites')
   :(currentRecipes = user.filterRecipeToCookByName(searchInputName.value), showFavoritesButton.innerText = 'Show All Favorites')
 }
 
