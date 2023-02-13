@@ -1,5 +1,3 @@
-import RecipeRepository from "./RecipeRepository";
-
 class User {
     constructor(userData) {
         this.name = userData.name;

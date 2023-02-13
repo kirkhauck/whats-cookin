@@ -2,7 +2,6 @@
 import './styles.css';
 import './micromodal.css';
 import './images/turing-logo.png';
-import './images/magnify.svg';
 import fetchAllData from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
@@ -10,15 +9,15 @@ import RecipeRepository from './classes/RecipeRepository';
 
 //GLOBAL VARIABLES
 let user, currentRecipes, selectedRecipe, recipeRepository;
-let favView = false;
+let view = "all";
 
 //SELECTORS
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
-const filterByTagButton = document.getElementById('tagButton');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
 const showFavoritesButton = document.getElementById('showFavoritesButton');
+const showAllButton = document.getElementById('showAllButton');
 const favoriteButton = document.getElementById('favoriteButton');
 const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
@@ -29,7 +28,6 @@ const modalInstructions = document.getElementById('modal-instructions');
 window.addEventListener('load', () => {
   fetchAllData()
     .then(apiData => {
-      // console.log(apiData)
       const users = apiData[0].usersData;
       const recipes = apiData[1].recipeData;
       const ingredients = apiData[2].ingredientsData;
@@ -42,67 +40,88 @@ window.addEventListener('load', () => {
 });
 
 recipeSection.addEventListener('click', (event) => {
-  selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
-  toggleHeart();
-  updateModal(selectedRecipe);
+  if(event.target.id !== 'recipes-section') {
+    selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+    toggleHeart();
+    updateModal(selectedRecipe);
+  }
 });
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
-  if(searchInputName.value === '' && !favView) {
-    currentRecipes = recipeRepository.recipes;
-  } else if (searchInputName.value === '' && favView) {
-    currentRecipes = user.recipesToCook;
-  } else if (!favView) {
-    currentRecipes = recipeRepository.filterByName(searchInputName.value);
-  } else if (favView) {
-    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
-  }
-
+  show(showAllButton);
+  show(showFavoritesButton);
+  showFilterBySearch();
   tagSection.value = 'select-value';
   refreshRecipes();
 });
 
 tagSection.addEventListener('change', function(event) {
-  if(this.value == 'select-value' && !favView) {
+  event.preventDefault();
+  show(showAllButton);
+  show(showFavoritesButton);
+  if(this.value == 'select-value' && view === "all") {
     currentRecipes = recipeRepository.recipes;
-  } else if (this.value == 'select-value' && favView) {
+    showFavoritesButton.innerText = 'Show Favorites';
+  } else if (this.value == 'select-value' && view === "fave") {
     currentRecipes = user.recipesToCook;
-  } else if (!favView) {
+    showFavoritesButton.innerText = 'Show Favorites';
+  } else if (view === "all") {
     currentRecipes = recipeRepository.filterByTag(this.value);
-  } else if (favView) {
+    showFavoritesButton.innerText = 'Show Favorites';
+  } else if (view === "fave") {
     currentRecipes = user.filterRecipeToCookByTag(this.value);
+    showFavoritesButton.innerText = 'Show All Favorites';
   }
-
   searchInputName.value = '';
   refreshRecipes();
 });
 
 showFavoritesButton.addEventListener('click', () => {
-  favView = !favView;
-  if(favView) {
-    currentRecipes = user.recipesToCook;
-    showFavoritesButton.innerText = 'Show All Recipes';
-  } else {
-    currentRecipes = recipeRepository.recipes;
-    showFavoritesButton.innerText = 'Show Favorites';
-  }
+  view = "fave";
+  hide(showFavoritesButton);
+  show(showAllButton);
+  currentRecipes = user.recipesToCook;
   tagSection.value = 'select-value';
   searchInputName.value = '';
   refreshRecipes();
 });
 
+showAllButton.addEventListener('click', () => {
+  view = "all";
+  showFavoritesButton.innerText = 'Show Favorites';
+  hide(showAllButton);
+  show(showFavoritesButton);
+  currentRecipes = recipeRepository.recipes;
+  tagSection.value = 'select-value';
+  searchInputName.value = '';
+  refreshRecipes();
+});
+
+
 favoriteButton.addEventListener('click', () => {
-  if (!user.recipesToCook.includes(selectedRecipe)) {
-    user.addRecipeToCook(selectedRecipe);
-  } else {
-    user.removeRecipeToCook(selectedRecipe);
-  }
+  !user.recipesToCook.includes(selectedRecipe) ? user.addRecipeToCook(selectedRecipe) : user.removeRecipeToCook(selectedRecipe);
   toggleHeart();
   refreshRecipes();
 });
 
 // FUNCTIONS
+const showFilterBySearch = () => {
+  if(searchInputName.value === '' && view === "all") {
+    currentRecipes = recipeRepository.recipes;
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (searchInputName.value === '' && view === "fave") {
+    currentRecipes = user.recipesToCook;
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (view === "all") {
+    currentRecipes = recipeRepository.filterByName(searchInputName.value);
+    showFavoritesButton.innerText = 'Show Favorites'
+  } else if (view === "fave") {
+    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
+    showFavoritesButton.innerText = 'Show All Favorites'
+  }
+}
+
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
@@ -159,12 +178,16 @@ const populateTagFilter = () => {
 }
 
 const toggleHeart = () => {
-  if (user.recipesToCook.includes(selectedRecipe)) {
-    heart.classList.add('full-heart');
-  } else {
-    heart.classList.remove('full-heart');
-  }
+  user.recipesToCook.includes(selectedRecipe) ? heart.classList.add('full-heart') : heart.classList.remove('full-heart');
 }
+
+const hide = (element) => {
+  element.classList.add('hidden')
+};
+
+const show = (element) => {
+  element.classList.remove('hidden')
+};
 
 const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
 
