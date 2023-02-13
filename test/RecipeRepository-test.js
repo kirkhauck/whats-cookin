@@ -2,10 +2,11 @@ import { expect } from 'chai';
 import RecipeRepository from '../src/classes/RecipeRepository';
 import Recipe from '../src/classes/Recipe';
 import recipeSampleData from '../src/data/recipes-sample';
-import ingredientsSampleData from '../src/data/ingredients';
+import ingredientsSampleData from '../src/data/ingredients-sample';
 
 describe('RecipeRepository', () => {
   let sampleRecipes, recipeRepository;
+  
   beforeEach('instantiate RecipeRepository', () => {
     sampleRecipes = recipeSampleData;
     recipeRepository = new RecipeRepository(sampleRecipes, ingredientsSampleData);
@@ -20,7 +21,7 @@ describe('RecipeRepository', () => {
   });
 
   it('Should have a list of recipes', () => {
-    const recipe = new Recipe(sampleRecipes[0], ingredientsSampleData)
+    const recipe = new Recipe(sampleRecipes[0], ingredientsSampleData);
     expect(recipeRepository.recipes[0]).to.deep.equal(recipe);
   });
 
