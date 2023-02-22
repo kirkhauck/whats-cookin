@@ -1,7 +1,7 @@
 import handleError from "./scripts";
 
 const fetchApi = (url) => {
-  return fetch(`https://what-s-cookin-starter-kit.herokuapp.com/api/v1/${url}`)
+  return fetch(`http://localhost:3001/api/v1/${url}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
