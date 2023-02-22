@@ -49,7 +49,7 @@ toggleHomeFaveButton.addEventListener('click', () => {
     view = 'home';
   }
   clearTagAndName();
-  refreshRecipes();
+  // refreshRecipes(); <-- repetetive if clearTagAndName calls refreshRecipes
 })
 
 clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
@@ -62,10 +62,21 @@ recipeSection.addEventListener('click', (event) => {
   }
 });
 
+searchInputName.addEventListener('keyup', () => {
+  if(!searchButtonName.value) {
+    updateCurrentRecipes('name', searchInputName.value);
+    refreshRecipes();
+  }
+})
+// added this fancy little event listener on the input of the search that immediately refreshes the search any time there is anything input
+
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
   if(searchInputName.value !== '') {
     show(clearTagAndNameButton);
+  } else {
+    hide(clearTagAndNameButton);
+    // added so clear button doesn't show when search bar is emptied - wondering if the input event listener makes this whole button redundant?
   }
   updateCurrentRecipes('name', searchInputName.value);
   tagSection.value = 'select-value';
@@ -76,6 +87,10 @@ tagSection.addEventListener('change', function(event) {
   event.preventDefault();
   if(tagSection.value !== 'select-value'){
     show(clearTagAndNameButton);
+  } else {
+    clearTagAndName();
+    return;
+    // added this else statement to account for what should happen when "no filter" is selected on the dropdown
   }
   updateCurrentRecipes('tag', tagSection.value);
   searchInputName.value = '';
