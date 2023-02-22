@@ -5,13 +5,7 @@ class Recipe {
   constructor(recipeInfo, ingredientsData) {
     this.id = recipeInfo.id;
     this.image = recipeInfo.image;
-    this.ingredients = recipeInfo.ingredients.map(ingredient => {
-      const findIngredient = ingredientsData.find(ingredientData => ingredientData.id === ingredient.id);
-      return {
-        ingredient: new Ingredient(findIngredient), 
-        quantity: ingredient.quantity
-      };
-    });
+    this.ingredients = this.getRecipeIngredients(recipeInfo, ingredientsData);
     this.instructions = recipeInfo.instructions;
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
@@ -36,6 +30,16 @@ class Recipe {
   getInstructions() {
     return this.instructions.map(instruction => instruction.instruction)
       .sort((instructionA, instructionB) => instructionA.number - instructionB.number);
+  }
+
+  getRecipeIngredients(recipeInfo, ingredientsData) {
+    recipeInfo.ingredients.map(ingredient => {
+      const findIngredient = ingredientsData.find(ingredientData => ingredientData.id === ingredient.id);
+      return {
+        ingredient: new Ingredient(findIngredient), 
+        quantity: ingredient.quantity
+      };
+    });
   }
 }
 
