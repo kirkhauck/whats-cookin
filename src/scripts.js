@@ -27,9 +27,9 @@ const modalInstructions = document.getElementById('modal-instructions');
 window.addEventListener('load', () => {
   fetchAllData()
     .then(apiData => {
-      const users = apiData[0].usersData;
-      const recipes = apiData[1].recipeData;
-      const ingredients = apiData[2].ingredientsData;
+      const users = apiData[0];
+      const recipes = apiData[1];
+      const ingredients = apiData[2];
       user = new User(users[getRandomIndex(users)]);
       recipeRepository = new RecipeRepository(recipes, ingredients);
       currentRecipes = recipeRepository.recipes;
