@@ -39,21 +39,20 @@ window.addEventListener('load', () => {
 });
 
 toggleHomeFaveButton.addEventListener('click', () => {
-  if(view === 'fave') {
+  if(view === 'home') {
     currentRecipes = user.recipesToCook;
-    toggleHomeFaveButton.innerText = 'Favorites';
-    view = 'home';
-  }else if(view === 'home'){
-    currentRecipes = recipeRepository.recipes;
-    toggleHomeFaveButton.innerText = 'Home';
+    toggleHomeFaveButton.innerText = 'Show Home';
     view = 'fave';
+  }else if(view === 'fave'){
+    currentRecipes = recipeRepository.recipes;
+    toggleHomeFaveButton.innerText = 'Show Favorites';
+    view = 'home';
   }
+  clearTagAndName();
   refreshRecipes();
 })
 
-clearTagAndNameButton.addEventListener('click', () => {
-  refreshRecipes();
-})
+clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
 
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
@@ -65,14 +64,20 @@ recipeSection.addEventListener('click', (event) => {
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
-  updateCurrentRecipes(searchInputName.value, '', 'Name');
+  if(searchInputName.value !== '') {
+    show(clearTagAndNameButton);
+  }
+  updateCurrentRecipes('name', searchInputName.value);
   tagSection.value = 'select-value';
   refreshRecipes();
 });
 
 tagSection.addEventListener('change', function(event) {
   event.preventDefault();
-  updateCurrentRecipes(tagSection.value, 'select-value', 'Tag');
+  if(tagSection.value !== 'select-value'){
+    show(clearTagAndNameButton);
+  }
+  updateCurrentRecipes('tag', tagSection.value);
   searchInputName.value = '';
   refreshRecipes();
 });
@@ -84,18 +89,26 @@ favoriteButton.addEventListener('click', () => {
 });
 
 // FUNCTIONS
-const updateCurrentRecipes = (value, inputDefault, type) => {
-  if(value == inputDefault && view === "home") {
-    currentRecipes = recipeRepository.recipes;
-  } else if (value == inputDefault && view === "fave") {
-    currentRecipes = user.recipesToCook;
-  } else if (view === "home") {
-    if(type === 'Name') currentRecipes = recipeRepository.filterByName(value);
-    if(type === 'Tag') currentRecipes = recipeRepository.filterByTag(value);
-  } else if (view === "fave") {
-    if(type === 'Name') currentRecipes = user.filterRecipeToCookByName(value);
-    if(type === 'Tag') currentRecipes = user.filterRecipeToCookByTag(value);
-  }
+const clearTagAndName = () => {
+  hide(clearTagAndNameButton);
+  searchInputName.value = ''
+  tagSection.value = 'select-value';
+  updateCurrentRecipes('all', searchInputName.value);
+  refreshRecipes();
+}
+
+const updateCurrentRecipes = (type, value) => {
+ if(view === 'home') {
+  if(type === 'all') currentRecipes = recipeRepository.recipes;
+  if(type === 'name') currentRecipes = recipeRepository.filterByName(value);
+  if(type === 'tag') currentRecipes = recipeRepository.filterByTag(value);
+ }
+ 
+ if(view === 'fave') {
+  if(type === 'all') currentRecipes = user.recipesToCook;
+  if(type === 'name') currentRecipes = user.filterRecipeToCookByName(value);
+  if(type === 'tag') currentRecipes = user.filterRecipeToCookByTag(value);
+ }
 }
 
 const refreshRecipes = () => {
