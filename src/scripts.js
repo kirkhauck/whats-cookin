@@ -125,7 +125,7 @@ const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure data-recipeid="${recipe.id}" data-custom-open="modal-1"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
+    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
   });
 
   MicroModal.init({
