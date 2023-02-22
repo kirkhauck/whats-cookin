@@ -33,7 +33,7 @@ class Recipe {
   }
 
   getRecipeIngredients(recipeInfo, ingredientsData) {
-    recipeInfo.ingredients.map(ingredient => {
+    return recipeInfo.ingredients.map(ingredient => {
       const findIngredient = ingredientsData.find(ingredientData => ingredientData.id === ingredient.id);
       return {
         ingredient: new Ingredient(findIngredient), 
