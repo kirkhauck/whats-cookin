@@ -9,9 +9,9 @@ class Recipe {
       const findIngredient = ingredientsData.find(ingredientData => ingredientData.id === ingredient.id);
       return {
         ingredient: new Ingredient(findIngredient), 
-        quantity: ingredient.quantity}
-      });
-
+        quantity: ingredient.quantity
+      };
+    });
     this.instructions = recipeInfo.instructions;
     this.name = recipeInfo.name;
     this.tags = recipeInfo.tags;
@@ -34,9 +34,8 @@ class Recipe {
   }
 
   getInstructions() {
-    const sortedInstructions = this.instructions.sort((instructionA, instructionB) => instructionA.number - instructionB.number);
-
-    return sortedInstructions.map(instruction => instruction.instruction);
+    return this.instructions.map(instruction => instruction.instruction)
+      .sort((instructionA, instructionB) => instructionA.number - instructionB.number);
   }
 }
 
