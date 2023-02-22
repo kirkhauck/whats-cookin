@@ -46,6 +46,7 @@ recipeSection.addEventListener('click', (event) => {
   }
 });
 
+
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
   show(showAllButton);
@@ -125,20 +126,23 @@ const refreshRecipes = () => {
   recipeSection.innerHTML = '';
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipe"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
+    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
   });
-
-  const recipeCards = document.querySelectorAll('.recipe');
-  recipeCards.forEach(recipeCard => recipeCard.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      recipeSection.click();
-    }
-  }))
 
   MicroModal.init({
     openTrigger: 'data-custom-open'
   });
+
+  let recipeCards = document.querySelectorAll('.recipeCard');
+
+  recipeCards.forEach(recipeCard => {
+    recipeCard.addEventListener('keydown', (event) => {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        recipeCard.click();
+      }
+    })
+  })
 }
 
 const updateModal = (recipe) => {
