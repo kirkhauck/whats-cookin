@@ -61,7 +61,8 @@ recipeSection.addEventListener('click', (event) => {
   }
 });
 
-searchInputName.addEventListener('keyup', () => {
+searchInputName.addEventListener('keyup', (event) => {
+  event.preventDefault();
   console.log(searchInputName.value)
   if(!searchInputName.value) {
     hide(clearTagAndNameButton);
