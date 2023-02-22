@@ -8,16 +8,16 @@ import RecipeRepository from './classes/RecipeRepository';
 
 //GLOBAL VARIABLES
 let user, currentRecipes, selectedRecipe, recipeRepository;
-let view = "all";
+let view = 'home';
 
 //SELECTORS
 const recipeSection = document.getElementById('recipes-section');
 const tagSection = document.querySelector('.tags');
 const searchInputName = document.getElementById('search-input-name');
 const searchButtonName = document.getElementById('search-button-name');
-const showFavoritesButton = document.getElementById('showFavoritesButton');
-const showAllButton = document.getElementById('showAllButton');
 const favoriteButton = document.getElementById('favoriteButton');
+const clearTagAndNameButton = document.getElementById('clearTagAndName');
+const toggleHomeFaveButton = document.getElementById('toggleHomeFave');
 const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
@@ -38,6 +38,23 @@ window.addEventListener('load', () => {
     });
 });
 
+toggleHomeFaveButton.addEventListener('click', () => {
+  if(view === 'fave') {
+    currentRecipes = user.recipesToCook;
+    toggleHomeFaveButton.innerText = 'Favorites';
+    view = 'home';
+  }else if(view === 'home'){
+    currentRecipes = recipeRepository.recipes;
+    toggleHomeFaveButton.innerText = 'Home';
+    view = 'fave';
+  }
+  refreshRecipes();
+})
+
+clearTagAndNameButton.addEventListener('click', () => {
+  refreshRecipes();
+})
+
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
     selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
@@ -48,55 +65,17 @@ recipeSection.addEventListener('click', (event) => {
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
-  show(showAllButton);
-  show(showFavoritesButton);
-  showFilterBySearch();
+  updateCurrentRecipes(searchInputName.value, '', 'Name');
   tagSection.value = 'select-value';
   refreshRecipes();
 });
 
 tagSection.addEventListener('change', function(event) {
   event.preventDefault();
-  show(showAllButton);
-  show(showFavoritesButton);
-  if(this.value == 'select-value' && view === "all") {
-    currentRecipes = recipeRepository.recipes;
-    showFavoritesButton.innerText = 'Show Favorites';
-  } else if (this.value == 'select-value' && view === "fave") {
-    currentRecipes = user.recipesToCook;
-    showFavoritesButton.innerText = 'Show Favorites';
-  } else if (view === "all") {
-    currentRecipes = recipeRepository.filterByTag(this.value);
-    showFavoritesButton.innerText = 'Show Favorites';
-  } else if (view === "fave") {
-    currentRecipes = user.filterRecipeToCookByTag(this.value);
-    showFavoritesButton.innerText = 'Show All Favorites';
-  }
+  updateCurrentRecipes(tagSection.value, 'select-value', 'Tag');
   searchInputName.value = '';
   refreshRecipes();
 });
-
-showFavoritesButton.addEventListener('click', () => {
-  view = "fave";
-  hide(showFavoritesButton);
-  show(showAllButton);
-  currentRecipes = user.recipesToCook;
-  tagSection.value = 'select-value';
-  searchInputName.value = '';
-  refreshRecipes();
-});
-
-showAllButton.addEventListener('click', () => {
-  view = "all";
-  showFavoritesButton.innerText = 'Show Favorites';
-  hide(showAllButton);
-  show(showFavoritesButton);
-  currentRecipes = recipeRepository.recipes;
-  tagSection.value = 'select-value';
-  searchInputName.value = '';
-  refreshRecipes();
-});
-
 
 favoriteButton.addEventListener('click', () => {
   !user.recipesToCook.includes(selectedRecipe) ? user.addRecipeToCook(selectedRecipe) : user.removeRecipeToCook(selectedRecipe);
@@ -105,19 +84,17 @@ favoriteButton.addEventListener('click', () => {
 });
 
 // FUNCTIONS
-const showFilterBySearch = () => {
-  if(searchInputName.value === '' && view === "all") {
+const updateCurrentRecipes = (value, inputDefault, type) => {
+  if(value == inputDefault && view === "home") {
     currentRecipes = recipeRepository.recipes;
-    showFavoritesButton.innerText = 'Show Favorites';
-  } else if (searchInputName.value === '' && view === "fave") {
+  } else if (value == inputDefault && view === "fave") {
     currentRecipes = user.recipesToCook;
-    showFavoritesButton.innerText = 'Show Favorites';
-  } else if (view === "all") {
-    currentRecipes = recipeRepository.filterByName(searchInputName.value);
-    showFavoritesButton.innerText = 'Show Favorites';
+  } else if (view === "home") {
+    if(type === 'Name') currentRecipes = recipeRepository.filterByName(value);
+    if(type === 'Tag') currentRecipes = recipeRepository.filterByTag(value);
   } else if (view === "fave") {
-    currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
-    showFavoritesButton.innerText = 'Show All Favorites';
+    if(type === 'Name') currentRecipes = user.filterRecipeToCookByName(value);
+    if(type === 'Tag') currentRecipes = user.filterRecipeToCookByTag(value);
   }
 }
 
