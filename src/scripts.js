@@ -100,6 +100,13 @@ tagSection.addEventListener('change', function(event) {
 
 favoriteButton.addEventListener('click', () => {
   !user.recipesToCook.includes(selectedRecipe) ? user.addRecipeToCook(selectedRecipe) : user.removeRecipeToCook(selectedRecipe);
+  if(searchInputName.value === '' && tagSection.value === 'select-value') {
+    updateCurrentRecipes('all', '');
+  } else if (searchInputName.value !== '') {
+    updateCurrentRecipes('name', searchInputName.value)
+  } else if (tagSection.value !== 'select-value') {
+    updateCurrentRecipes('tag', tagSection.value)
+  }
   toggleHeart();
   refreshRecipes();
 });
