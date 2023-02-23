@@ -76,9 +76,9 @@ searchInputName.addEventListener('keyup', (event) => {
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
   if(!searchInputName.value) {
-    show(clearTagAndNameButton);
-  } else {
     hide(clearTagAndNameButton);
+  } else {
+    show(clearTagAndNameButton);
   }
   updateCurrentRecipes('name', searchInputName.value);
   tagSection.value = 'select-value';
