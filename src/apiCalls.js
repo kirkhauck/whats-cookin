@@ -20,4 +20,22 @@ const fetchAllData = () => {
   .catch((error) => handleError(error));
 }
 
-export default fetchAllData;
+const postFavorite = (userID, recipeID) => {
+  fetch('http://localhost:3001/api/v1/usersRecipes', {
+    method: 'POST',
+    body: JSON.stringify({userID: userID, recipeID: recipeID}), 
+    headers: {
+     'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if(!response.ok) {
+        throw new Error(response.status)
+      }
+      return response.json()
+    })
+    .then(json => console.log(json))
+    .catch(err => console.log(err));
+}
+
+export {fetchAllData, postFavorite};

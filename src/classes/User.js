@@ -1,12 +1,15 @@
+import { postFavorite } from "../apiCalls";
+
 class User {
   constructor(userData) {
     this.name = userData.name;
     this.id = userData.id;
-    this.recipesToCook = [];
+    this.recipesToCook = userData.recipesToCook;
   }
 
   addRecipeToCook(recipe) {
-    this.recipesToCook.push(recipe);
+    //this.recipesToCook.push(recipe);
+    postFavorite(this.id, recipe.id);
   }
 
   removeRecipeToCook(recipe) {

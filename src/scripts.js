@@ -1,7 +1,7 @@
 //IMPORTS
 import './styles.css';
 import './micromodal.css';
-import fetchAllData from './apiCalls';
+import {fetchAllData, postFavorite} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
@@ -31,6 +31,7 @@ window.addEventListener('load', () => {
       const recipes = apiData[1];
       const ingredients = apiData[2];
       user = new User(users[getRandomIndex(users)]);
+      console.log(user);
       recipeRepository = new RecipeRepository(recipes, ingredients);
       currentRecipes = recipeRepository.recipes;
       populateTagFilter();
