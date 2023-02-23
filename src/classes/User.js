@@ -1,20 +1,25 @@
+import { postFavorite } from "../apiCalls";
+
 class User {
-  constructor(userData) {
+  constructor(userData, repository) {
     this.name = userData.name;
     this.id = userData.id;
-    this.recipesToCook = [];
+    this.recipesToCook = userData.recipesToCook;
+    this.repository = repository;
   }
 
   addRecipeToCook(recipe) {
-    this.recipesToCook.push(recipe);
+    //this.recipesToCook.push(recipe);
+    return postFavorite(this.id, recipe.id);
+    //this.recipesToCook.push(recipe.id)
   }
 
   removeRecipeToCook(recipe) {
-    this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
+    //this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
   }
 
   filterRecipeToCookByTag(tag) {
-    const filteredRecipes = this.recipesToCook.filter((recipe) => {
+    const filteredRecipes = this.getFavoritesFromID().filter((recipe) => {
       return recipe.tags.includes(tag);
     });
   
@@ -22,11 +27,15 @@ class User {
   }
 
   filterRecipeToCookByName(name) {
-    const filteredRecipes = this.recipesToCook.filter((recipe) => {
+    const filteredRecipes = this.getFavoritesFromID().filter((recipe) => {
       return recipe.name.toLowerCase().includes(name.toLowerCase());
     });
     
     return filteredRecipes;
+  }
+
+  getFavoritesFromID() {
+    return this.recipesToCook.map(recipeID => this.repository.recipes.find(recipe => recipe.id === recipeID))
   }
 };
 
