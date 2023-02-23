@@ -21,7 +21,7 @@ const fetchAllData = () => {
 }
 
 const postFavorite = (userID, recipeID) => {
-  fetch('http://localhost:3001/api/v1/usersRecipes', {
+  return fetch('http://localhost:3001/api/v1/usersRecipes', {
     method: 'POST',
     body: JSON.stringify({userID: userID, recipeID: recipeID}), 
     headers: {
@@ -34,8 +34,8 @@ const postFavorite = (userID, recipeID) => {
       }
       return response.json()
     })
-    .then(json => console.log(json))
+    .then(json => json)
     .catch(err => console.log(err));
 }
 
-export {fetchAllData, postFavorite};
+export {fetchAllData, postFavorite, fetchApi};

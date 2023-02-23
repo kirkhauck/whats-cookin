@@ -1,7 +1,7 @@
 //IMPORTS
 import './styles.css';
 import './micromodal.css';
-import {fetchAllData, postFavorite} from './apiCalls';
+import {fetchAllData, postFavorite, fetchApi} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
@@ -30,10 +30,10 @@ window.addEventListener('load', () => {
       const users = apiData[0];
       const recipes = apiData[1];
       const ingredients = apiData[2];
-      user = new User(users[getRandomIndex(users)]);
-      console.log(user);
+      //user = new User(users[getRandomIndex(users)]);
       recipeRepository = new RecipeRepository(recipes, ingredients);
       currentRecipes = recipeRepository.recipes;
+      user = new User(users[0], recipeRepository);
       populateTagFilter();
       refreshRecipes();
     });
@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
 
 toggleHomeFaveButton.addEventListener('click', () => {
   if(view === 'home') {
-    currentRecipes = user.recipesToCook;
+    currentRecipes = user.getFavoritesFromID();
     toggleHomeFaveButton.innerText = 'Show Home';
     view = 'fave';
   }else if(view === 'fave'){
@@ -57,6 +57,7 @@ clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
     selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
+
     toggleHeart();
     updateModal(selectedRecipe);
   }
@@ -64,7 +65,6 @@ recipeSection.addEventListener('click', (event) => {
 
 searchInputName.addEventListener('keyup', (event) => {
   event.preventDefault();
-  console.log(searchInputName.value)
   if(!searchInputName.value) {
     hide(clearTagAndNameButton);
   } else if(searchInputName.value){
@@ -100,16 +100,25 @@ tagSection.addEventListener('change', function(event) {
 });
 
 favoriteButton.addEventListener('click', () => {
-  !user.recipesToCook.includes(selectedRecipe) ? user.addRecipeToCook(selectedRecipe) : user.removeRecipeToCook(selectedRecipe);
-  if(searchInputName.value === '' && tagSection.value === 'select-value') {
-    updateCurrentRecipes('all', '');
-  } else if (searchInputName.value !== '') {
-    updateCurrentRecipes('name', searchInputName.value)
-  } else if (tagSection.value !== 'select-value') {
-    updateCurrentRecipes('tag', tagSection.value)
-  }
-  toggleHeart();
-  refreshRecipes();
+  if(!user.getFavoritesFromID().includes(selectedRecipe) ) {
+    user.addRecipeToCook(selectedRecipe)
+    .then( () => {
+      fetchAllData()
+      .then(apiData => {
+        const users = apiData[0];
+        user.recipesToCook = users[0].recipesToCook;
+        if(searchInputName.value === '' && tagSection.value === 'select-value') {
+          updateCurrentRecipes('all', '');
+        } else if (searchInputName.value !== '') {
+          updateCurrentRecipes('name', searchInputName.value)
+        } else if (tagSection.value !== 'select-value') {
+          updateCurrentRecipes('tag', tagSection.value)
+        }
+        toggleHeart();
+        refreshRecipes();
+      });
+    })
+  } 
 });
 
 // FUNCTIONS
@@ -129,7 +138,7 @@ const updateCurrentRecipes = (type, value) => {
  }
  
  if(view === 'fave') {
-  if(type === 'all') currentRecipes = user.recipesToCook;
+  if(type === 'all') currentRecipes = user.getFavoritesFromID();
   if(type === 'name') currentRecipes = user.filterRecipeToCookByName(value);
   if(type === 'tag') currentRecipes = user.filterRecipeToCookByTag(value);
  }
@@ -200,8 +209,15 @@ const populateTagFilter = () => {
   });
 }
 
+// const convertRecipeIDs = () => {
+//   const x = user.recipesToCook.map(recipeID => recipeRepository.recipes.find(recipe => recipe.id === recipeID))
+//   console.log(x)
+//   console.log(user)
+//   return x
+// }
+
 const toggleHeart = () => {
-  user.recipesToCook.includes(selectedRecipe) ? heart.classList.add('full-heart') : heart.classList.remove('full-heart');
+  user.getFavoritesFromID().includes(selectedRecipe) ? heart.classList.add('full-heart') : heart.classList.remove('full-heart');
 }
 
 const hide = (element) => {
