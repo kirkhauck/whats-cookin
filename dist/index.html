@@ -2,30 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
     <title>Snake Meal</title>
   </head>
   <body>
     <header>
-      <h1>Snake Meal</h1>
+      <section class="nav">
+        <h1><span class="material-symbols-outlined icon">restaurant</span>Snake Meal</h1>
+        <button id="toggleHomeFave" class="show-faves">Favorite Recipes</button>
+        <button id="toggleHomeFave" class="show-faves">Settings</button>
+        <select name="currency-dropdown" id="currencyDropdown"></select>
+      </section>
     </header>
-    <section id="recipes-section" class="recipes"></section>
-    <footer>
-      <select name="currency-dropdown" id="currencyDropdown"></select>
+    <div class="customize-search">
+      <p>EXPLORE RECIPES</p>
+      <label for=“tags”>
+        <select id=“tags” class="tags">
+          <option value="select-value">No Filter</option>
+        </select>
+      </label>
       <form>
         <label for="search-input-name"> 
           <input id="search-input-name" type="text" name="search" placeholder="Recipe Search">
           <button id="search-button-name"> <span class="material-symbols-outlined">search</span></button>
         </label>
       </form>
-        <label for=“tags”>
-          <select id=“tags” class="tags">
-            <option value="select-value">No Filter</option>
-          </select>
-        </label>
-      <button id="clearTagAndName" class="show-faves hidden">Clear</button>
-      <button id="toggleHomeFave" class="show-faves">Show Favorites</button>
-    </footer>
+      <button id="clearTagAndName" class="show-faves hidden">Clear Search</button>
+    </div>
+    <section id="recipes-section" class="recipes"></section>
     <!-- MICROMODAL -->
     <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
       <div class="modal__overlay" tabindex="-1" data-micromodal-close>
