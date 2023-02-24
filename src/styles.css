@@ -31,8 +31,6 @@ body {
   font-size: small;
 }
 
-
-
 header {
   display: flex;
   flex-shrink: 0;
@@ -43,7 +41,6 @@ header {
   color: #F8333C;
   height: 100px;
   margin: 0;
-  /* border-bottom: black 1px solid; */
 }
 
 .icon {
@@ -85,7 +82,6 @@ img, figure {
 }
 
 .customize-search {
-  /* margin-top: 20px; */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -103,20 +99,6 @@ img, figure {
   margin-top: 3px;
   font-weight: light;
 }
-
-/* footer {
-  flex-shrink: 0;
-  height: 80px;
-  background-color: #f8ead8;
-  display: flex;
-  gap: 5%;
-  padding-left: 5%;
-  padding-right: 5%;
-  align-items: center;
-  justify-content: space-evenly;
-  border-top: #eddbc7 5px solid;
-  box-shadow: 0px 0px 2px 2px #ccc;
-} */
 
 .recipe-title {
   margin:0;
@@ -161,7 +143,6 @@ figcaption {
 .nav {
   display: flex;
   align-items: center;
-  /* justify-content: space-evenly; */
 }
 
 #currencyDropdown {
@@ -171,8 +152,6 @@ figcaption {
 form {
   display: flex;
   align-items: end;
-  /* justify-content: space-between; */
-  /* align-items: stretch; */
   height: 35px;
   width: 190px;
 }
@@ -203,7 +182,6 @@ button {
   background-color: white;
   border: none;
   color: #F18805;
-  /* border-radius: 4px; */
 }
 
 .show-faves {
