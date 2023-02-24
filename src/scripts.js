@@ -123,7 +123,6 @@ favoriteButton.addEventListener('click', () => {
 
 currencyDropdown.addEventListener('change', () => {
   currentRecipes.forEach(recipe => {
-    console.log(currentRecipes)
     recipe.ingredients.forEach(ingredient => {
       Convert(ingredient.ingredient.ingredientCost).from(currentC).to(currencyDropdown.value)
       .then(data => ingredient.ingredient.ingredientCost = data)
@@ -173,7 +172,9 @@ const refreshRecipes = () => {
 
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
+    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event"><p class="recipe-tag">${recipe.tags[0]}</p><p class= "recipe-title">${recipe.name}</p>
+    <div class="time"><span class="material-symbols-outlined timer">timer</span><p>30 minutes</p>
+    </div></figcaption></figure>`;
   });
 
   MicroModal.init({
