@@ -70,7 +70,7 @@ searchInputName.addEventListener('keyup', (event) => {
   } else if(searchInputName.value){
     show(clearTagAndNameButton);
   }
-  updateCurrentRecipes('name', searchInputName.value);
+  updateCurrentRecipes();
   refreshRecipes();
 })
 
@@ -81,7 +81,7 @@ searchButtonName.addEventListener('click', (event) => {
   } else {
     show(clearTagAndNameButton);
   }
-  updateCurrentRecipes('name', searchInputName.value);
+  updateCurrentRecipes();
   tagSection.value = 'select-value';
   refreshRecipes();
 });
@@ -94,7 +94,7 @@ tagSection.addEventListener('change', function(event) {
     clearTagAndName();
     return;
   }
-  updateCurrentRecipes('tag', tagSection.value);
+  updateCurrentRecipes();
   searchInputName.value = '';
   refreshRecipes();
 });
@@ -107,13 +107,7 @@ favoriteButton.addEventListener('click', () => {
       .then(apiData => {
         const users = apiData[0];
         user.recipesToCook = users[0].recipesToCook;
-        if(searchInputName.value === '' && tagSection.value === 'select-value') {
-          updateCurrentRecipes('all', '');
-        } else if (searchInputName.value !== '') {
-          updateCurrentRecipes('name', searchInputName.value)
-        } else if (tagSection.value !== 'select-value') {
-          updateCurrentRecipes('tag', tagSection.value)
-        }
+        updateCurrentRecipes();
         toggleHeart();
         refreshRecipes();
       });
@@ -126,26 +120,31 @@ const clearTagAndName = () => {
   hide(clearTagAndNameButton);
   searchInputName.value = ''
   tagSection.value = 'select-value';
-  updateCurrentRecipes('all', searchInputName.value);
+  updateCurrentRecipes();
   refreshRecipes();
 }
 
-const updateCurrentRecipes = (type, value) => {
- if(view === 'home') {
-  if(type === 'all') currentRecipes = recipeRepository.recipes;
-  if(type === 'name') currentRecipes = recipeRepository.filterByName(value);
-  if(type === 'tag') currentRecipes = recipeRepository.filterByTag(value);
- }
- 
- if(view === 'fave') {
-  if(type === 'all') currentRecipes = user.getFavoritesFromID();
-  if(type === 'name') currentRecipes = user.filterRecipeToCookByName(value);
-  if(type === 'tag') currentRecipes = user.filterRecipeToCookByTag(value);
- }
+const updateCurrentRecipes = () => {
+  if(view === 'home') {
+    if(searchInputName.value) currentRecipes = recipeRepository.filterByName(searchInputName.value);
+    else if(tagSection.value !== 'select-value') currentRecipes = recipeRepository.filterByTag(tagSection.value);
+    else currentRecipes = recipeRepository.recipes;
+  }
+
+  if(view === 'fave') {
+    if(searchInputName.value) currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
+    else if(tagSection.value !== 'select-value') currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
+    else currentRecipes = user.getFavoritesFromID();
+  }
 }
 
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
+
+  if(currentRecipes.length === 0) {
+    recipeSection.innerHTML = '<p>Sorry, there\'s nothing here to show you!</p>';
+  }
+
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
     <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event">${recipe.name}</figcaption></figure>`;
@@ -208,13 +207,6 @@ const populateTagFilter = () => {
     tagSection.innerHTML += `<option value="${tag}">${tag}</option>`;
   });
 }
-
-// const convertRecipeIDs = () => {
-//   const x = user.recipesToCook.map(recipeID => recipeRepository.recipes.find(recipe => recipe.id === recipeID))
-//   console.log(x)
-//   console.log(user)
-//   return x
-// }
 
 const toggleHeart = () => {
   user.getFavoritesFromID().includes(selectedRecipe) ? heart.classList.add('full-heart') : heart.classList.remove('full-heart');
