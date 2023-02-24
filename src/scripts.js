@@ -5,10 +5,14 @@ import {fetchAllData, postFavorite, fetchApi} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
+import { Convert } from "easy-currencies";
+import CurrencyList from 'currency-list';
 
 //GLOBAL VARIABLES
 let user, currentRecipes, selectedRecipe, recipeRepository;
 let view = 'home';
+let currentC = 'USD';
+const currencyList = CurrencyList.getAll('en_US');
 
 //SELECTORS
 const recipeSection = document.getElementById('recipes-section');
@@ -22,6 +26,7 @@ const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
+const currencyDropdown = document.getElementById('currencyDropdown');
 
 //EVENT LISTENERS
 window.addEventListener('load', () => {
@@ -36,6 +41,7 @@ window.addEventListener('load', () => {
       user = new User(users[0], recipeRepository);
       populateTagFilter();
       refreshRecipes();
+      populateCurrencyDropdown();
     });
 });
 
@@ -111,9 +117,21 @@ favoriteButton.addEventListener('click', () => {
         toggleHeart();
         refreshRecipes();
       });
-    })
-  } 
+    });
+  }; 
 });
+
+currencyDropdown.addEventListener('change', () => {
+  currentRecipes.forEach(recipe => {
+    console.log(currentRecipes)
+    recipe.ingredients.forEach(ingredient => {
+      Convert(ingredient.ingredient.ingredientCost).from(currentC).to(currencyDropdown.value)
+      .then(data => ingredient.ingredient.ingredientCost = data)
+    })
+  })
+  currentC = currencyDropdown.value;
+  refreshRecipes();
+})
 
 // FUNCTIONS
 const clearTagAndName = () => {
@@ -122,6 +140,14 @@ const clearTagAndName = () => {
   tagSection.value = 'select-value';
   updateCurrentRecipes();
   refreshRecipes();
+}
+
+const populateCurrencyDropdown = () => {
+  const currencyKeys = Object.keys(currencyList);
+  currencyKeys.forEach(key => 
+    currencyDropdown.innerHTML += `<option value="${key}">${currencyList[key].name} - ${currencyList[key].symbol_native}</option>`
+  )
+  currencyDropdown.value = 'USD';
 }
 
 const updateCurrentRecipes = () => {
@@ -182,7 +208,7 @@ const updateModal = (recipe) => {
       <tr>
         <th>${ing.quantity.amount} ${ing.quantity.unit}</th>
         <th>${ing.ingredient.name}</th>
-        <th>$${recipe.getIngredientCost()[i]}</th>
+        <th>${currencyList[currentC].symbol_native}${recipe.getIngredientCost()[i]}</th>
       </tr>
     `;
   });
@@ -191,7 +217,7 @@ const updateModal = (recipe) => {
       <tr>
         <th>&nbsp</th>
         <th>&nbsp</th>
-        <th class="total-cost">Total: $${recipe.getIngredientTotalCost()}</th>
+        <th class="total-cost">Total: ${currencyList[currentC].symbol_native}${recipe.getIngredientTotalCost()}</th>
       </tr>
     `;
 

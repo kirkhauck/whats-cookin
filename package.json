@@ -24,6 +24,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "currency-list": "^1.0.8",
+    "easy-currencies": "^1.7.0",
     "micromodal": "^0.4.10"
   }
 }
