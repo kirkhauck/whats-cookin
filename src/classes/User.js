@@ -9,9 +9,7 @@ class User {
   }
 
   addRecipeToCook(recipe) {
-    //this.recipesToCook.push(recipe);
     return postFavorite(this.id, recipe.id);
-    //this.recipesToCook.push(recipe.id)
   }
 
   removeRecipeToCook(recipe) {
