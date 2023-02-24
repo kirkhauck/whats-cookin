@@ -27,23 +27,25 @@ h1 {
   height: 80px;
   margin: 0;
   border-bottom: #eddbc7 5px solid;
+  box-shadow: 0px 0px 2px 2px #ccc;
 }
 
 .recipes {
+  background-color:#f8ead864;
   display: flex;
   overflow: auto;
   padding: 25px;
   flex-grow: 1;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   row-gap: 60px;
 }
 
 img, figure {
-  height: 180px;
-  width: 180px;
-  font-size: smaller;
+  height: 200px;
+  width: 200px;
+  font-size: medium;
   margin: 0;
   border-radius: 4px;
   object-fit: cover;
@@ -60,6 +62,7 @@ footer {
   align-items: center;
   justify-content: space-evenly;
   border-top: #eddbc7 5px solid;
+  box-shadow: 0px 0px 2px 2px #ccc;
 }
 
 .ignore-pointer-event {
@@ -78,6 +81,13 @@ figcaption:hover {
 
 img {
   border-bottom: #6E454C solid 5px;
+}
+
+figure {
+  padding: 30px;
+  background-color:#f8ead838;
+  padding-bottom: 75px;
+  box-shadow: 0px 0px 2px 2px #ccc;
 }
 
 figcaption {
@@ -128,14 +138,14 @@ button {
 }
 
 button:hover:not(.favorite-button), input:hover, select:hover {
-  background-color: #f9f5e7;
+  background-color: #ff63475c;
   cursor: pointer;
 }
 
 input, select {
   font-family: 'Lucida Grande', sans-serif;
   background-color: #f9f5e7;
-  border: #6E454C 1px solid;
+  border: #363537 1px solid;
   border-radius: 4px;
   color: #6E454C;
   height: 31px;
