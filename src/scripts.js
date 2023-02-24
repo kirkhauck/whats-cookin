@@ -5,10 +5,12 @@ import {fetchAllData, postFavorite, fetchApi} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
+import { Convert } from "easy-currencies";
 
 //GLOBAL VARIABLES
 let user, currentRecipes, selectedRecipe, recipeRepository;
 let view = 'home';
+let currentC = 'USD';
 
 //SELECTORS
 const recipeSection = document.getElementById('recipes-section');
@@ -22,6 +24,9 @@ const heart = document.getElementById('heart');
 const modalTitle = document.getElementById('modal-1-title');
 const modalIngredients = document.getElementById('modal-ingredients');
 const modalInstructions = document.getElementById('modal-instructions');
+const currencyDropdown = document.getElementById('currencyDropdown');
+
+// const value = Convert(15).from("USD").to("EUR").then(data => console.log(data))
 
 //EVENT LISTENERS
 window.addEventListener('load', () => {
@@ -114,6 +119,18 @@ favoriteButton.addEventListener('click', () => {
     })
   } 
 });
+
+currencyDropdown.addEventListener('change', () => {
+  currentRecipes.forEach(recipe => {
+    console.log(currentRecipes)
+    recipe.ingredients.forEach(ingredient => {
+      Convert(ingredient.ingredient.ingredientCost).from(currentC).to(currencyDropdown.value)
+      .then(data => ingredient.ingredient.ingredientCost = data)
+    })
+  })
+  currentC = currencyDropdown.value;
+  refreshRecipes();
+})
 
 // FUNCTIONS
 const clearTagAndName = () => {
