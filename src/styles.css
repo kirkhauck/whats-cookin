@@ -2,7 +2,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  color: #000100;
+  color: #3A3335;
   font-family: 'Playfair Display', serif;
 }
 
@@ -16,7 +16,7 @@ body {
 }
 
 .timer {
-  color: #7B886F;
+  color: #9C6615;
 }
 
 .time {
@@ -35,18 +35,19 @@ header {
   justify-content: space-between;
   padding-left: 20px;
   background-color: white;
-  color: #F8333C;
+  color: #F13030;
   height: 100px;
   margin: 0;
 }
 
 .icon {
   font-size: 30px;
-  color: #B16202;
+  color: white;
   margin-right: 10px;
-  border: 1px solid #B16202;
   padding: 3px;
   border-radius: 20px;
+  background-color: #F13030;
+  
 }
 
 h1 {
@@ -86,14 +87,13 @@ img, figure {
   font-family: 'Playfair Display', serif;
   color: white;
   font-size: larger;
-  background-color: #B16202;
-  opacity: 80%;
+  background-color:  #3A3335;
   height: 65px;
 }
 
 .recipe-tag {
   font-family: 'Bebas Neue', cursive;
-  color: #616c57;
+  color: #226F54;
   font-size: 17px;
   margin-top: 3px;
   font-weight: light;
@@ -182,7 +182,7 @@ button {
   background-color: white;
   border: none;
   border-radius: 4px;
-  color: #B16202;
+  color: #3A3335;
 }
 
 .show-faves {
@@ -196,14 +196,14 @@ button {
 }
 
 button:hover:not(.favorite-button), input:hover, select:hover {
-  background-color:#f9f5e7;
+  background-color: lightgrey;
   cursor: pointer;
 }
 
 input, select {
   font-family: 'Lucida Grande', sans-serif;
   background-color: white;
-  border: #B16202 1px solid;
+  border: #3A3335 1px solid;
   border-radius: 4px;
   color: black;
   height: 31px;
@@ -219,16 +219,16 @@ select {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
   background: white;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7B886F;
+  background: #3A3335;
 }
 
 @media only screen and (max-width: 815px) {
