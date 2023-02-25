@@ -1,5 +1,5 @@
 .modal {
-  font-family: 'Lucida Grande', sans-serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .modal__overlay {
@@ -17,8 +17,8 @@
 .modal__container {
   background-color: white;
   padding: 30px;
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 70vw;
+  max-height: 90vh;
   border-radius: 4px;
   overflow-y: auto;
   box-sizing: border-box;
@@ -32,7 +32,7 @@
 
 .modal__title {
   margin: 0;
-  color: black;
+  color: #3A3335;
 }
 
 .modal__close, .favorite-button {
@@ -52,16 +52,30 @@
 
 .favorite-button:hover {
   cursor: pointer;
-  background-color: #eddbc7;
+  opacity: 70%;
 }
 
 .favorite-button {
   display: flex;
   align-items: center;
-  /* outline-style: none; */
-  border: #6E454C solid 2px;
+  border: #AC0C0C solid 2px;
+  color: #AC0C0C;
   border-radius: 20px;
   margin-left: 15px;
+  font-size: large;
+}
+
+.instructions-title {
+  height: fit-content;
+  width: fit-content;
+  padding: 4px 10px;
+  background-color: #3A3335;
+  color: white;
+  border-radius: 3px;
+}
+
+#modal-instructions {
+  font-size: 18px;
 }
 
 .modal__header, .modal__close:before { 
@@ -124,25 +138,28 @@
 
 table {
   border-collapse: collapse;
-  border: #eddbc7 solid 1px;
+  border: #3A3335 solid 1px;
   width: 100%;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 td, th {
   text-align: left;
-  border: #eddbc7 solid 1px;
+  border: #3A3335 solid 1px;
   padding: 8px;
 }
 
 .total-cost, .table-head {
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 700;
 }
+
 .table-head {
-  text-decoration: underline;
+  background-color: #3A3335;
+  color: white;
 }
 
 .total-cost {
@@ -150,5 +167,5 @@ td, th {
 }
 
 li {
-  line-height: 1.5;
+  line-height: 2;
 }
