@@ -14,23 +14,23 @@
     <header>
       <section class="nav">
         <h1><span aria-hidden="true" class="material-symbols-outlined icon">restaurant</span>Snake Meal</h1>
-        <button aria-label="view favorite recipes" id="toggleHomeFave" class="show-faves">Favorite Recipes</button>
+        <button aria-label="view favorite recipes" id="toggleHomeFave" class="show-faves">Show Favorites</button>
       </section>
       <select aria-label="Currecy selection" name="currency-dropdown" id="currencyDropdown"></select>
     </header>
     <div class="customize-search">
       <p class="explore-label">EXPLORE RECIPES</p>
-      <label for=“tags”>
-        <select id=“tags” class="tags">
-          <option aria-label="search recipes by tag" value="select-value">No Filter</option>
-        </select>
-      </label>
       <form>
         <label for="search-input-name"> 
           <input aria-label="search recipes by name" id="search-input-name" type="text" name="search" placeholder="Recipe Search">
           <button id="search-button-name"> <span class="material-symbols-outlined">search</span></button>
         </label>
       </form>
+      <label for=“tags”>
+        <select id=“tags” class="tags">
+          <option aria-label="search recipes by tag" value="select-value">No Filter</option>
+        </select>
+      </label>
       <button id="clearTagAndName" class="show-faves hidden">Clear Search</button>
     </div>
     <section id="recipes-section" class="recipes"></section>
@@ -41,7 +41,7 @@
           <header class="modal__header">
             <div class="recipe-title">
               <h2 class="modal__title" id="modal-1-title">Recipe Title</h2>
-              <button id="favoriteButton" class="favorite-button">
+              <button aria-label="add recipe to favorites" id="favoriteButton" class="favorite-button">
                 <span id="heart" class="material-symbols-outlined">favorite</span> Favorite
               </button>
             </div>
