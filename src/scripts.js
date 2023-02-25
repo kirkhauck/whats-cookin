@@ -63,7 +63,7 @@ clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
     selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
-    toggleHeart();
+    toggleFavorite();
     updateModal(selectedRecipe);
   }
 });
@@ -114,7 +114,7 @@ favoriteButton.addEventListener('click', () => {
         const users = apiData[0].users;
         user.recipesToCook = users[0].recipesToCook;
         updateCurrentRecipes();
-        toggleHeart();
+        toggleFavorite();
         refreshRecipes();
       });
     });
@@ -172,11 +172,11 @@ const refreshRecipes = () => {
 
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
-      <img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt">
+    <figure role="button" tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
+      <img class="ignore-pointer-event" src="${recipe.image}" alt="picture of ${recipe.name}">
       <figcaption class="ignore-pointer-event">
         <h2 class="recipe-tag">${recipe.tags[0]}</h2>
-        <h2 class= "recipe-title">${recipe.name}</h2>
+        <h2 aria-hidden="true" class= "recipe-title">${recipe.name}</h2>
         <div class="time"><span class="material-symbols-outlined timer">timer</span><p>${recipe.getIngredientTime()}</p></div>
       </figcaption>
     </figure>`;
@@ -240,8 +240,18 @@ const populateTagFilter = () => {
   });
 }
 
-const toggleHeart = () => {
-  user.getFavoritesFromID().includes(selectedRecipe) ? heart.classList.add('full-heart') : heart.classList.remove('full-heart');
+const toggleFavorite = () => {
+  if (user.getFavoritesFromID().includes(selectedRecipe)) {
+    heart.classList.add('full-heart');
+  } else {
+    heart.classList.remove('full-heart');
+  }
+  
+  if (user.getFavoritesFromID().includes(selectedRecipe)) {
+    favoriteButton.ariaLabel = 'remove recipe from favorites';
+  } else {
+    favoriteButton.ariaLabel = 'add recipe to favorites';
+  }
 }
 
 const hide = (element) => {
