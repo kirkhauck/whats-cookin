@@ -13,8 +13,8 @@
   <body>
     <header>
       <section class="nav">
-        <h1><span class="material-symbols-outlined icon">restaurant</span>Snake Meal</h1>
-        <button id="toggleHomeFave" class="show-faves">Favorite Recipes</button>
+        <h1><span aria-hidden="true" class="material-symbols-outlined icon">restaurant</span>Snake Meal</h1>
+        <button aria-label="view favorite recipes" id="toggleHomeFave" class="show-faves">Favorite Recipes</button>
       </section>
       <select aria-label="Currecy selection" name="currency-dropdown" id="currencyDropdown"></select>
     </header>
@@ -22,12 +22,12 @@
       <p class="explore-label">EXPLORE RECIPES</p>
       <label for=“tags”>
         <select id=“tags” class="tags">
-          <option value="select-value">No Filter</option>
+          <option aria-label="search recipes by tag" value="select-value">No Filter</option>
         </select>
       </label>
       <form>
         <label for="search-input-name"> 
-          <input id="search-input-name" type="text" name="search" placeholder="Recipe Search">
+          <input aria-label="search recipes by name" id="search-input-name" type="text" name="search" placeholder="Recipe Search">
           <button id="search-button-name"> <span class="material-symbols-outlined">search</span></button>
         </label>
       </form>
@@ -49,13 +49,10 @@
           </header>
           <main class="modal__content" id="modal-1-content">
             <table id="modal-ingredients">
-              <tr>
-                <th>Ingredient</th>
-                <th>Amount</th>
-                <th>Cost</th>
-              </tr>
+              <!--POPULATES WITH RECIPE INGREDIENT INFO-->
             </table>
             <ol id="modal-instructions">
+              <!--POPULATES WITH RECIPE INSTRUCTIONS-->
             </ol>
           </main>
         </div>
