@@ -77,6 +77,7 @@ searchInputName.addEventListener('keyup', (event) => {
     show(clearTagAndNameButton);
   }
   updateCurrentRecipes();
+  tagSection.value = 'select-value';
   refreshRecipes();
 })
 
