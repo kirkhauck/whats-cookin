@@ -63,7 +63,6 @@ clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
     selectedRecipe = recipeRepository.getRecipeByID(event.target.dataset.recipeid);
-
     toggleHeart();
     updateModal(selectedRecipe);
   }
@@ -76,8 +75,8 @@ searchInputName.addEventListener('keyup', (event) => {
   } else if(searchInputName.value){
     show(clearTagAndNameButton);
   }
-  updateCurrentRecipes();
   tagSection.value = 'select-value';
+  updateCurrentRecipes();
   refreshRecipes();
 })
 
@@ -88,8 +87,8 @@ searchButtonName.addEventListener('click', (event) => {
   } else {
     show(clearTagAndNameButton);
   }
-  updateCurrentRecipes();
   tagSection.value = 'select-value';
+  updateCurrentRecipes();
   refreshRecipes();
 });
 
@@ -101,8 +100,8 @@ tagSection.addEventListener('change', function(event) {
     clearTagAndName();
     return;
   }
-  updateCurrentRecipes();
   searchInputName.value = '';
+  updateCurrentRecipes();
   refreshRecipes();
 });
 
@@ -124,7 +123,6 @@ favoriteButton.addEventListener('click', () => {
 
 currencyDropdown.addEventListener('change', () => {
   currentRecipes.forEach(recipe => {
-    console.log(currentRecipes)
     recipe.ingredients.forEach(ingredient => {
       Convert(ingredient.ingredient.ingredientCost).from(currentC).to(currencyDropdown.value)
       .then(data => ingredient.ingredient.ingredientCost = data)
