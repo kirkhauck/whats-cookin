@@ -177,7 +177,7 @@ const refreshRecipes = () => {
       <figcaption class="ignore-pointer-event">
         <h2 class="recipe-tag">${recipe.tags[0]}</h2>
         <h2 class= "recipe-title">${recipe.name}</h2>
-        <div class="time"><span class="material-symbols-outlined timer">timer</span><p>30 minutes</p></div>
+        <div class="time"><span class="material-symbols-outlined timer">timer</span><p>${recipe.getIngredientTime()}</p></div>
       </figcaption>
     </figure>`;
   });

@@ -1,6 +1,5 @@
 import Ingredient from './Ingredient';
 
-
 class Recipe {
   constructor(recipeInfo, ingredientsData) {
     this.id = recipeInfo.id;
@@ -17,6 +16,10 @@ class Recipe {
 
   getIngredientCost() {
     return this.ingredients.map(ingredient => ((ingredient.quantity.amount * ingredient.ingredient.ingredientCost) / 100).toFixed(2));
+  }
+
+  getIngredientTime() {
+    return `${this.instructions.length * 15} minutes`
   }
 
   getIngredientTotalCost() {
