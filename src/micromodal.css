@@ -15,7 +15,7 @@
 }
 
 .modal__container {
-  background-color: #f9f5e7;
+  background-color: white;
   padding: 30px;
   max-width: 80vw;
   max-height: 80vh;
@@ -32,7 +32,7 @@
 
 .modal__title {
   margin: 0;
-  color: #6E454C;
+  color: black;
 }
 
 .modal__close, .favorite-button {

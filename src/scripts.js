@@ -172,9 +172,14 @@ const refreshRecipes = () => {
 
   currentRecipes.forEach(recipe => {
     recipeSection.innerHTML += `
-    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard"><img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt"><figcaption class="ignore-pointer-event"><p class="recipe-tag">${recipe.tags[0]}</p><p class= "recipe-title">${recipe.name}</p>
-    <div class="time"><span class="material-symbols-outlined timer">timer</span><p>30 minutes</p>
-    </div></figcaption></figure>`;
+    <figure tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
+      <img class="ignore-pointer-event" src="${recipe.image}" alt="${recipe.name} alt">
+      <figcaption class="ignore-pointer-event">
+        <h2 class="recipe-tag">${recipe.tags[0]}</h2>
+        <h2 class= "recipe-title">${recipe.name}</h2>
+        <div class="time"><span class="material-symbols-outlined timer">timer</span><p>30 minutes</p></div>
+      </figcaption>
+    </figure>`;
   });
 
   MicroModal.init({

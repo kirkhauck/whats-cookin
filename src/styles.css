@@ -42,9 +42,9 @@ header {
 
 .icon {
   font-size: 30px;
-  color: #F18805;
+  color: #B16202;
   margin-right: 10px;
-  border: 1px solid #F18805;
+  border: 1px solid #B16202;
   padding: 3px;
   border-radius: 20px;
 }
@@ -86,14 +86,14 @@ img, figure {
   font-family: 'Playfair Display', serif;
   color: white;
   font-size: larger;
-  background-color: #F18805;
+  background-color: #B16202;
   opacity: 80%;
   height: 65px;
 }
 
 .recipe-tag {
   font-family: 'Bebas Neue', cursive;
-  color: #7B886F;
+  color: #616c57;
   font-size: 17px;
   margin-top: 3px;
   font-weight: light;
@@ -101,6 +101,7 @@ img, figure {
 
 .recipe-title {
   margin:0;
+  font-size: 20px;
 }
 
 .ignore-pointer-event {
@@ -181,7 +182,7 @@ button {
   background-color: white;
   border: none;
   border-radius: 4px;
-  color: #F18805;
+  color: #B16202;
 }
 
 .show-faves {
@@ -202,7 +203,7 @@ button:hover:not(.favorite-button), input:hover, select:hover {
 input, select {
   font-family: 'Lucida Grande', sans-serif;
   background-color: white;
-  border: #F18805 1px solid;
+  border: #B16202 1px solid;
   border-radius: 4px;
   color: black;
   height: 31px;
