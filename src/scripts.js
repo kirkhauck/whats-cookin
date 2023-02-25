@@ -32,9 +32,9 @@ const currencyDropdown = document.getElementById('currencyDropdown');
 window.addEventListener('load', () => {
   fetchAllData()
     .then(apiData => {
-      const users = apiData[0];
-      const recipes = apiData[1];
-      const ingredients = apiData[2];
+      const users = apiData[0].users;
+      const recipes = apiData[1].recipes;
+      const ingredients = apiData[2].ingredients;
       //user = new User(users[getRandomIndex(users)]);
       recipeRepository = new RecipeRepository(recipes, ingredients);
       currentRecipes = recipeRepository.recipes;
@@ -77,6 +77,7 @@ searchInputName.addEventListener('keyup', (event) => {
     show(clearTagAndNameButton);
   }
   updateCurrentRecipes();
+  tagSection.value = 'select-value';
   refreshRecipes();
 })
 
@@ -111,7 +112,7 @@ favoriteButton.addEventListener('click', () => {
     .then( () => {
       fetchAllData()
       .then(apiData => {
-        const users = apiData[0];
+        const users = apiData[0].users;
         user.recipesToCook = users[0].recipesToCook;
         updateCurrentRecipes();
         toggleHeart();
@@ -123,6 +124,7 @@ favoriteButton.addEventListener('click', () => {
 
 currencyDropdown.addEventListener('change', () => {
   currentRecipes.forEach(recipe => {
+    console.log(currentRecipes)
     recipe.ingredients.forEach(ingredient => {
       Convert(ingredient.ingredient.ingredientCost).from(currentC).to(currencyDropdown.value)
       .then(data => ingredient.ingredient.ingredientCost = data)
