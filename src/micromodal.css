@@ -58,7 +58,7 @@
 .favorite-button {
   display: flex;
   align-items: center;
-  outline-style: none;
+  /* outline-style: none; */
   border: #6E454C solid 2px;
   border-radius: 20px;
   margin-left: 15px;

@@ -111,7 +111,7 @@ favoriteButton.addEventListener('click', () => {
     .then( () => {
       fetchAllData()
       .then(apiData => {
-        const users = apiData[0];
+        const users = apiData[0].users;
         user.recipesToCook = users[0].recipesToCook;
         updateCurrentRecipes();
         toggleHeart();
