@@ -1,8 +1,7 @@
 //IMPORTS
 import './styles.css';
 import './micromodal.css';
-// import apiObj from './apiCalls'
-import {fetchAllData, postFavorite, fetchApi} from './apiCalls';
+import {fetchAllData, updateFavorite} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
 import RecipeRepository from './classes/RecipeRepository';
@@ -108,17 +107,9 @@ tagSection.addEventListener('change', function(event) {
 
 favoriteButton.addEventListener('click', () => {
   if(!user.getFavoritesFromID().includes(selectedRecipe) ) {
-    postFavorite(user.id, selectedRecipe.id)
-    .then( () => {
-      fetchAllData()
-      .then(apiData => {
-        const users = apiData[0].users;
-        user.recipesToCook = users[0].recipesToCook;
-        updateCurrentRecipes();
-        toggleFavorite();
-        refreshRecipes();
-      });
-    });
+    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'POST'))
+  } else {
+    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'DELETE'))
   }; 
 });
 
@@ -195,6 +186,19 @@ const refreshRecipes = () => {
         event.preventDefault();
         recipeCard.click();
       }
+    })
+  })
+}
+
+const refreshFavorites = (promise) => {
+  promise.then(() => {
+    fetchAllData()
+    .then(apiData => {
+      const users = apiData[0].users;
+      user.recipesToCook = users[0].recipesToCook;
+      updateCurrentRecipes();
+      toggleFavorite();
+      refreshRecipes();
     })
   })
 }

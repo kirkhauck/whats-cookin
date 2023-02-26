@@ -14,9 +14,9 @@ class User {
   //   return apiObj.postFavorite(this.id, recipe.id);
   // }
 
-  removeRecipeToCook(recipe) {
-    //this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
-  }
+  // removeRecipeToCook(recipe) {
+  //   this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
+  // }
 
   filterRecipeToCookByTag(tag) {
     const filteredRecipes = this.getFavoritesFromID().filter((recipe) => {

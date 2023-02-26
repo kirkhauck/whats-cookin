@@ -19,7 +19,7 @@ class Recipe {
   }
 
   getIngredientTime() {
-    return `${this.instructions.length * 15} minutes`
+    return `${this.instructions.length * 15} minutes`;
   }
 
   getIngredientTotalCost() {
