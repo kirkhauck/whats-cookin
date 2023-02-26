@@ -20,9 +20,9 @@ const fetchAllData = () => {
   .catch((error) => handleError(error));
 }
 
-const postFavorite = (userID, recipeID) => {
+const updateFavorite = (userID, recipeID, method) => {
   return fetch('http://localhost:3001/api/v1/usersRecipes', {
-    method: 'POST',
+    method: method,
     body: JSON.stringify({userID: userID, recipeID: recipeID}), 
     headers: {
      'Content-Type': 'application/json'
@@ -30,12 +30,11 @@ const postFavorite = (userID, recipeID) => {
   })
     .then(response => {
       if(!response.ok) {
-        throw new Error(response.status)
+        throw new Error(response.status);
       }
-      return response.json()
+      return response.json();
     })
-    .then(json => json)
-    .catch(err => console.log(err));
+    .catch(err => handleError(err));
 }
 
-export {fetchAllData, postFavorite, fetchApi};
+export {fetchAllData, updateFavorite};
