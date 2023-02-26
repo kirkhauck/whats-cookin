@@ -1,6 +1,7 @@
 //IMPORTS
 import './styles.css';
 import './micromodal.css';
+// import apiObj from './apiCalls'
 import {fetchAllData, postFavorite, fetchApi} from './apiCalls';
 import MicroModal from 'micromodal';
 import User from './classes/User';
@@ -107,7 +108,7 @@ tagSection.addEventListener('change', function(event) {
 
 favoriteButton.addEventListener('click', () => {
   if(!user.getFavoritesFromID().includes(selectedRecipe) ) {
-    user.addRecipeToCook(selectedRecipe)
+    postFavorite(user.id, selectedRecipe.id)
     .then( () => {
       fetchAllData()
       .then(apiData => {

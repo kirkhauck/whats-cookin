@@ -1,4 +1,5 @@
-import { postFavorite } from "../apiCalls";
+// import { postFavorite } from "../apiCalls.js";
+// import apiObj from '../apiCalls';
 
 class User {
   constructor(userData, repository) {
@@ -8,9 +9,10 @@ class User {
     this.repository = repository;
   }
 
-  addRecipeToCook(recipe) {
-    return postFavorite(this.id, recipe.id);
-  }
+  // addRecipeToCook(recipe) {
+
+  //   return apiObj.postFavorite(this.id, recipe.id);
+  // }
 
   removeRecipeToCook(recipe) {
     //this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
