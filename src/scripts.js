@@ -35,7 +35,6 @@ window.addEventListener('load', () => {
       const users = apiData[0].users;
       const recipes = apiData[1].recipes;
       const ingredients = apiData[2].ingredients;
-      //user = new User(users[getRandomIndex(users)]);
       recipeRepository = new RecipeRepository(recipes, ingredients);
       currentRecipes = recipeRepository.recipes;
       user = new User(users[0], recipeRepository);
@@ -50,7 +49,7 @@ toggleHomeFaveButton.addEventListener('click', () => {
     currentRecipes = user.getFavoritesFromID();
     toggleHomeFaveButton.innerText = 'Home';
     view = 'fave';
-  }else if(view === 'fave'){
+  } else if(view === 'fave') {
     currentRecipes = recipeRepository.recipes;
     toggleHomeFaveButton.innerText = 'Favorite Recipes';
     view = 'home';
@@ -58,7 +57,7 @@ toggleHomeFaveButton.addEventListener('click', () => {
   clearTagAndName();
 })
 
-clearTagAndNameButton.addEventListener('click', () => clearTagAndName())
+clearTagAndNameButton.addEventListener('click', () => clearTagAndName());
 
 recipeSection.addEventListener('click', (event) => {
   if(event.target.id !== 'recipes-section') {
@@ -72,13 +71,13 @@ searchInputName.addEventListener('keyup', (event) => {
   event.preventDefault();
   if(!searchInputName.value) {
     hide(clearTagAndNameButton);
-  } else if(searchInputName.value){
+  } else if(searchInputName.value) {
     show(clearTagAndNameButton);
   }
   tagSection.value = 'select-value';
   updateCurrentRecipes();
   refreshRecipes();
-})
+});
 
 searchButtonName.addEventListener('click', (event) => {
   event.preventDefault();
@@ -107,9 +106,9 @@ tagSection.addEventListener('change', function(event) {
 
 favoriteButton.addEventListener('click', () => {
   if(!user.getFavoritesFromID().includes(selectedRecipe) ) {
-    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'POST'))
+    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'POST'));
   } else {
-    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'DELETE'))
+    refreshFavorites(updateFavorite(user.id, selectedRecipe.id, 'DELETE'));
   }; 
 });
 
@@ -122,12 +121,12 @@ currencyDropdown.addEventListener('change', () => {
   })
   currentC = currencyDropdown.value;
   refreshRecipes();
-})
+});
 
 // FUNCTIONS
 const clearTagAndName = () => {
   hide(clearTagAndNameButton);
-  searchInputName.value = ''
+  searchInputName.value = '';
   tagSection.value = 'select-value';
   updateCurrentRecipes();
   refreshRecipes();
@@ -136,22 +135,29 @@ const clearTagAndName = () => {
 const populateCurrencyDropdown = () => {
   const currencyKeys = Object.keys(currencyList);
   currencyKeys.forEach(key => 
-    currencyDropdown.innerHTML += `<option value="${key}">${currencyList[key].name} - ${currencyList[key].symbol_native}</option>`
-  )
+    currencyDropdown.innerHTML += `<option value="${key}">${currencyList[key].name} - ${currencyList[key].symbol_native}</option>`);
   currencyDropdown.value = 'USD';
 }
 
 const updateCurrentRecipes = () => {
   if(view === 'home') {
-    if(searchInputName.value) currentRecipes = recipeRepository.filterByName(searchInputName.value);
-    else if(tagSection.value !== 'select-value') currentRecipes = recipeRepository.filterByTag(tagSection.value);
-    else currentRecipes = recipeRepository.recipes;
+    if(searchInputName.value) {
+      currentRecipes = recipeRepository.filterByName(searchInputName.value);
+    } else if(tagSection.value !== 'select-value') {
+      currentRecipes = recipeRepository.filterByTag(tagSection.value);
+    } else {
+      currentRecipes = recipeRepository.recipes;
+    }
   }
 
   if(view === 'fave') {
-    if(searchInputName.value) currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
-    else if(tagSection.value !== 'select-value') currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
-    else currentRecipes = user.getFavoritesFromID();
+    if(searchInputName.value) {
+      currentRecipes = user.filterRecipeToCookByName(searchInputName.value);
+    } else if(tagSection.value !== 'select-value') {
+      currentRecipes = user.filterRecipeToCookByTag(tagSection.value);
+    } else {
+      currentRecipes = user.getFavoritesFromID();
+    }
   }
 }
 
@@ -164,10 +170,10 @@ const refreshRecipes = () => {
   
   currentRecipes.forEach(recipe => {
     if(!recipe.tags[0]) {
-      recipe.tags[0] = 'gluten-free'
+      recipe.tags[0] = 'gluten-free';
     }
     if(recipe.id === 698701) {
-      recipe.image = 'https://www.abeautifulplate.com/wp-content/uploads/2014/06/raspberry-souffle-1-5-500x411.jpg'
+      recipe.image = 'https://www.abeautifulplate.com/wp-content/uploads/2014/06/raspberry-souffle-1-5-500x411.jpg';
     }
 
     recipeSection.innerHTML += `
@@ -214,12 +220,12 @@ const updateModal = (recipe) => {
   modalTitle.innerText = recipe.name;
 
   modalIngredients.innerHTML = `
-      <tr>
-        <th class="table-head">Amount</th>
-        <th class="table-head">Ingredient</th>
-        <th class="table-head">Cost</th>
-      </tr>
-    `;
+    <tr>
+      <th class="table-head">Amount</th>
+      <th class="table-head">Ingredient</th>
+      <th class="table-head">Cost</th>
+    </tr>
+  `;
 
   recipe.ingredients.forEach((ing,i) => {
     modalIngredients.innerHTML += `
@@ -232,12 +238,12 @@ const updateModal = (recipe) => {
   });
 
   modalIngredients.innerHTML += `
-      <tr>
-        <th>&nbsp</th>
-        <th>&nbsp</th>
-        <th class="total-cost">Total: ${currencyList[currentC].symbol_native}${recipe.getIngredientTotalCost()}</th>
-      </tr>
-    `;
+    <tr>
+      <th>&nbsp</th>
+      <th>&nbsp</th>
+      <th class="total-cost">Total: ${currencyList[currentC].symbol_native}${recipe.getIngredientTotalCost()}</th>
+    </tr>
+  `;
 
   modalInstructions.innerHTML = '';
   recipe.getInstructions().forEach(instruction => {
@@ -275,8 +281,6 @@ const hide = (element) => {
 const show = (element) => {
   element.classList.remove('hidden');
 }
-
-const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
 
 const handleError = (error) => recipeSection.innerText = `${error}, sorry!`;
 
