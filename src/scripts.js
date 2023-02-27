@@ -48,11 +48,11 @@ window.addEventListener('load', () => {
 toggleHomeFaveButton.addEventListener('click', () => {
   if(view === 'home') {
     currentRecipes = user.getFavoritesFromID();
-    toggleHomeFaveButton.innerText = 'Show Home';
+    toggleHomeFaveButton.innerText = 'Home';
     view = 'fave';
   }else if(view === 'fave'){
     currentRecipes = recipeRepository.recipes;
-    toggleHomeFaveButton.innerText = 'Show Favorites';
+    toggleHomeFaveButton.innerText = 'Favorite Recipes';
     view = 'home';
   }
   clearTagAndName();
