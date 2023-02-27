@@ -1,6 +1,3 @@
-// import { postFavorite } from "../apiCalls.js";
-// import apiObj from '../apiCalls';
-
 class User {
   constructor(userData, repository) {
     this.name = userData.name;
@@ -8,15 +5,6 @@ class User {
     this.recipesToCook = userData.recipesToCook;
     this.repository = repository;
   }
-
-  // addRecipeToCook(recipe) {
-
-  //   return apiObj.postFavorite(this.id, recipe.id);
-  // }
-
-  // removeRecipeToCook(recipe) {
-  //   this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
-  // }
 
   filterRecipeToCookByTag(tag) {
     const filteredRecipes = this.getFavoritesFromID().filter((recipe) => {
@@ -35,7 +23,7 @@ class User {
   }
 
   getFavoritesFromID() {
-    return this.recipesToCook.map(recipeID => this.repository.recipes.find(recipe => recipe.id === recipeID))
+    return this.recipesToCook.map(recipeID => this.repository.recipes.find(recipe => recipe.id === recipeID));
   }
 };
 
