@@ -2,7 +2,7 @@
 
 ## Abstract
 
-What's Cookin is an app that populates a page with recipe thumbnails. Users are able to click a recipe and view the instructions, ingredients, and the total cost of the ingredients. The user is able favorite recipes and click the `Show Favorites` button to see only the recipes they favorited. Users are able to look up recipes by name and by tags.
+What's Cookin is an app that populates a page with recipe thumbnails. Users are able to click a recipe and view the instructions, ingredients, and the total cost of the ingredients. The user is able favorite recipes and click the `Favorites` button to see only the recipes they favorited. Users are able to look up recipes by name and by tags. Users can also select from any currency to update the cost of each ingredient and the total.
 ***
 
 ### Technologies Used:
