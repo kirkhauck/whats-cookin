@@ -157,12 +157,19 @@ const updateCurrentRecipes = () => {
 
 const refreshRecipes = () => {
   recipeSection.innerHTML = '';
-
+  
   if(currentRecipes.length === 0) {
     recipeSection.innerHTML = '<p>Sorry, there\'s nothing here to show you!</p>';
   }
-
+  
   currentRecipes.forEach(recipe => {
+    if(!recipe.tags[0]) {
+      recipe.tags[0] = 'gluten-free'
+    }
+    if(recipe.id === 698701) {
+      recipe.image = 'https://www.abeautifulplate.com/wp-content/uploads/2014/06/raspberry-souffle-1-5-500x411.jpg'
+    }
+
     recipeSection.innerHTML += `
     <figure role="button" tabindex='0' data-recipeid="${recipe.id}" data-custom-open="modal-1" class="recipeCard">
       <img class="ignore-pointer-event" src="${recipe.image}" alt="picture of ${recipe.name}">
@@ -239,7 +246,9 @@ const updateModal = (recipe) => {
 }
 
 const populateTagFilter = () => {
-  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))].sort();
+  const recipeTags = [...new Set(recipeRepository.recipes.flatMap(recipe => recipe.tags))];
+  recipeTags.push('gluten-free');
+  recipeTags.sort();
   recipeTags.forEach(tag => {
     tagSection.innerHTML += `<option value="${tag}">${tag}</option>`;
   });
