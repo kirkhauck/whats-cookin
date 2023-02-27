@@ -15,7 +15,7 @@ const fetchAllData = () => {
   return Promise.all([
     fetchApi('users'),
     fetchApi('recipes'),
-    fetchApi('ingredients'),
+    fetchApi('ingredients')
 ])
   .catch((error) => handleError(error));
 }
