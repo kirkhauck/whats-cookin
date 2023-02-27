@@ -189,10 +189,13 @@ button {
   display: flex;
   align-items: center;
   width: fit-content;
-  height: 35px;
+  height: 36px;
   font-size: 15px;
-  border-radius: 4px;
-  margin-left: 15px;
+  border-radius: 18px;
+  border-style: solid;
+  margin-left: 35px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 button:hover:not(.favorite-button), input:hover, select:hover {
