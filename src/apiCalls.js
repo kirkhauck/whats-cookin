@@ -1,7 +1,7 @@
 import handleError from "./scripts";
 
 const fetchApi = (url) => {
-  return fetch(`http://localhost:3001/api/v1/${url}`)
+  return fetch(`https://whats-cookin-api.vercel.app/api/v1/${url}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -21,7 +21,7 @@ const fetchAllData = () => {
 }
 
 const updateFavorite = (userID, recipeID, method) => {
-  return fetch('http://localhost:3001/api/v1/usersRecipes', {
+  return fetch('https://whats-cookin-api.vercel.app/api/v1/', {
     method: method,
     body: JSON.stringify({userID: userID, recipeID: recipeID}), 
     headers: {
