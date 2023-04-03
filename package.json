@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve",
-    "build": "webpack",
+    "build": "webpack build --output public",
     "test": "mochapack 'test/**/*.js'"
   },
   "author": "Turing School of Software and Design",
